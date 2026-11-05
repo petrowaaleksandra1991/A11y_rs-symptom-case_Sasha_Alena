@@ -1,0 +1,1929 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>РС: каркас кейса</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Golos+Text:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#DCDFE8;
+  --card:#FFFFFF;
+  --card2:#EAEDEE;
+  --dark:#141414;
+  --ink:#272727;
+  --muted:#6E767B;
+  --soft:#5E656A;
+  --line:#E3E3E3;
+  --accent:#1E9ED4;
+  --accent-deep:#0A6C94;
+  --accent-soft:#D7EDF8;
+  --az-ink-1:#0E6E95;
+  --az-ink-2:#0A4A68;
+  --display:'Manrope','Helvetica Neue',Arial,sans-serif;
+  --body:'Inter','Helvetica Neue',Arial,sans-serif;
+  --blue:#2C5BDC;
+  /* палитра экрана приложения */
+  --s-bg:#EFF0F5; --s-ink:#16212B; --s-head:#171719; --s-mut:#4A5763;
+  --s-acc:#1E5A85; --s-acc-soft:#E4EEF8; --s-line:#E3E8ED; --s-line2:#DCE1E7;
+  --s-eye:#5B3C9E; --s-eye-bg:#EDE7F7; --s-tin:#A3361B; --s-tin-bg:#FBE9E4;
+  --screen:'Golos Text','Inter',system-ui,sans-serif;
+  --barh:64px;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+.wrap{max-width:1180px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ── Шапка ── */
+.nav{position:fixed;z-index:30;display:flex;align-items:center;gap:10px;
+  right:max(24px,env(safe-area-inset-right,0px));
+  bottom:max(48px,env(safe-area-inset-bottom,0px))}
+.nbtn{width:50px;height:50px;border:0;padding:0;border-radius:15px;cursor:pointer;
+  background:#fff;color:var(--ink);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 6px 18px -6px rgba(20,30,44,.28)}
+.nbtn svg{width:23px;height:23px;display:block}
+.nbtn:hover:not(:disabled){background:#F6F8FA}
+.nbtn:disabled{opacity:.34;cursor:default;box-shadow:none}
+.nbtn:focus-visible{outline:2px solid var(--accent-deep);outline-offset:3px}
+.cnt{font-size:14px;font-weight:500;color:var(--soft);min-width:52px;text-align:center;
+  font-variant-numeric:tabular-nums;user-select:none}
+@media (max-width:699px){.nav{left:auto!important;right:16px;bottom:20px}}
+@media (max-width:560px){.nav{right:14px;bottom:16px;gap:7px}.nbtn{width:44px;height:44px;border-radius:13px}}
+
+/* ── Слайды ── */
+main.wrap{padding-block:34px 104px}
+.slide{display:none;flex-direction:column;gap:14px}
+.slide.on{display:flex}
+
+.kick{font-size:12px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(36px,6.2vw,72px);line-height:1.03;letter-spacing:-0.05em;margin:0;text-wrap:balance}
+h2{font-family:var(--display);font-weight:600;font-size:clamp(27px,3.4vw,42px);line-height:1.09;letter-spacing:-0.045em;margin:0;text-wrap:balance}
+h3{font-family:var(--display);font-weight:600;font-size:21px;line-height:1.2;letter-spacing:-0.03em;margin:0}
+h4{font-family:var(--display);font-weight:600;font-size:17px;line-height:1.25;letter-spacing:-0.022em;margin:0}
+p{margin:0}
+.lead{font-family:var(--display);font-weight:400;font-size:clamp(16px,1.5vw,18.5px);line-height:1.5;max-width:60ch}
+.body2{font-family:var(--display);font-weight:400;font-size:clamp(14.5px,1.25vw,15.8px);line-height:1.62;color:var(--soft);max-width:58ch;margin:0}
+.sub{color:var(--soft)}
+
+.card{background:var(--card);border-radius:24px;padding:clamp(22px,2.4vw,34px);display:flex;flex-direction:column;gap:16px;min-width:0}
+.card.grey{background:var(--card2)}
+.card.grey .sub{color:#596064}
+.card.blue{background:var(--accent-soft)}
+.card.mid{justify-content:center}
+.card.tight{padding:clamp(18px,1.9vw,24px);border-radius:16px;gap:10px}
+.card.concept{background:linear-gradient(158deg,var(--az-ink-1) 0%,var(--az-ink-2) 100%);color:#EEF8FC;position:relative;overflow:hidden}
+.card.concept h2{color:#fff}
+.card.concept .lead{color:rgba(255,255,255,.85)}
+.card.concept .note{background:rgba(255,255,255,.12);color:#EAF6FB}
+.card.concept::after{content:"";position:absolute;right:-70px;top:-70px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(126,211,240,.30),transparent 68%);pointer-events:none}
+
+.row{display:grid;gap:14px}
+.r3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.r21{grid-template-columns:minmax(0,1fr) minmax(0,1.3fr)}
+.rside{grid-template-columns:minmax(0,600px) minmax(0,480px);gap:clamp(26px,3.6vw,60px);justify-content:center;align-items:start}
+.rside h2{font-size:clamp(24px,2.3vw,34px);line-height:1.1}
+.rside .lead{font-size:clamp(15px,1.15vw,17px)}
+@media (max-width:1140px){.r3,.r21{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:819px){.rside{grid-template-columns:minmax(0,1fr);justify-content:stretch}}
+
+.tag{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tag::before{content:"";width:7px;height:7px;border-radius:99px;background:var(--accent)}
+.tag.light{color:rgba(255,255,255,.72)}
+.tag.light::before{background:#7FD3F0}
+.meta{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-size:14px;font-weight:500;padding:9px 16px;border-radius:999px;background:var(--accent-soft);color:var(--accent-deep)}
+.chip.sm{font-size:12.5px;padding:6px 12px}
+.chip.solid{background:var(--accent-deep);color:#fff;font-weight:600}
+.note{display:flex;gap:10px;font-size:14px;line-height:1.45;background:var(--bg);border-radius:14px;padding:14px 16px}
+.note b{font-weight:600}
+.reason{display:flex;flex-direction:column;gap:7px}
+.reason p{font-size:15.5px;line-height:1.5}
+.body-p{font-family:var(--display);font-weight:400;font-size:15.5px;line-height:1.55;color:var(--soft);max-width:60ch}
+.body-p b.k{display:block;font-weight:700;color:var(--blue)}
+.sp{flex:1;min-height:12px}
+
+ol.numlist{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+ol.numlist li{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;padding:18px 0;border-top:1px solid var(--line);align-items:start}
+ol.numlist li:first-child{border-top:0;padding-top:4px}
+ol.numlist .n{font-family:var(--display);font-weight:600;font-size:15px;color:var(--accent);padding-top:2px;font-variant-numeric:tabular-nums}
+ol.numlist h4{margin-bottom:5px}
+ol.numlist p{font-size:14.5px;line-height:1.5;color:var(--soft)}
+
+/* ══ Телефон: геометрия iPhone 17 Pro Max ══
+   рамка 1470×3000 · экран 1318×2866 со смещением 76/67 */
+.pair{display:grid;justify-content:center;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,28px);align-items:start}
+@media (max-width:559px){.pair{grid-template-columns:minmax(0,1fr);gap:36px}}
+.variant{display:grid;grid-template-rows:auto auto auto auto;gap:8px;min-width:0}
+.variant h3{margin:0 0 2px;height:28px}
+@media (max-width:1100px){.variant h3{margin:0 0 2px;font-size:18px}}
+
+.ph{position:relative;width:100%;max-width:300px;margin:6px 0 0;aspect-ratio:464/980}
+.ph .body{position:absolute;inset:0;border-radius:11.6% / 5.4%;
+  background:linear-gradient(140deg,#6E8092 0%,#3A4C5E 26%,#495B6D 48%,#313F50 72%,#5E7083 100%);
+  box-shadow:0 16px 38px -18px rgba(14,24,34,.34)}
+.ph .scr{position:absolute;left:2.586%;top:1.224%;width:94.83%;height:97.55%;
+  border-radius:9.4% / 4.4%;overflow:hidden;background:#fff}
+.ph .canvas{width:393px;height:852px;transform-origin:top left;position:absolute;left:0;top:0}
+.ph .canvas.w440{width:440px;height:956px}
+.ph .island{position:absolute;left:50%;transform:translateX(-50%);top:2.5%;width:27%;height:3.7%;
+  background:#07090B;border-radius:99px;z-index:4;pointer-events:none}
+.ph b.k{position:absolute;background:linear-gradient(90deg,#55687B,#3A4B5C);border-radius:2px}
+.ph b.act{left:-1%;top:16.6%;width:1.4%;height:3.5%}
+.ph b.vu{left:-1%;top:23.4%;width:1.4%;height:6.4%}
+.ph b.vd{left:-1%;top:31.5%;width:1.4%;height:6.4%}
+.ph b.pw{right:-1%;top:25.6%;width:1.4%;height:9.2%}
+.ph b.cam{right:-1%;top:38.8%;width:1.4%;height:4.3%}
+.ph b.pw.hot{background:var(--accent);right:-1.4%;width:2%;
+  box-shadow:0 0 0 4px rgba(30,158,212,.28);border-radius:3px}
+.phcap{text-align:left;font-size:13px;color:var(--muted);margin-top:12px;min-height:19px}
+
+
+/* ══ Экран приложения · 393×852 (по прототипу) ══ */
+.app{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink);font-size:16px;line-height:1.3}
+.app-stb{position:absolute;top:0;left:0;width:393px;height:48px;background:var(--s-bg);z-index:3;
+  display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 28px;
+  font-size:15px;font-weight:600;letter-spacing:-.3px;color:#2C2C2D}
+.app-stb .ic{display:flex;align-items:center;gap:5px}
+.app-scroll{position:absolute;inset:0;overflow:hidden}
+.app-col{width:361px;margin:62px 0 0 16px;display:flex;flex-direction:column;gap:12px;padding-bottom:124px}
+.app-top{display:flex;align-items:center;justify-content:space-between}
+.app-top h2{font-family:var(--screen);font-size:20px;line-height:26px;font-weight:600;letter-spacing:0;margin:0}
+.app-gear{width:44px;height:44px;border-radius:16px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.app-main{display:flex;flex-direction:column;gap:24px}
+
+.app-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.app-week .d{display:flex;flex-direction:column;gap:6px;align-items:center;min-width:0}
+.app-week .wd{font-size:14px;line-height:18px;font-weight:500;color:var(--s-mut)}
+.app-week .d.now .wd{font-weight:700;color:var(--s-acc)}
+.app-week .cell{display:flex;flex-direction:column;gap:4px;align-items:center;justify-content:center;
+  width:100%;height:56px;border-radius:14px;background:#fff}
+.app-week .d.now .cell{box-shadow:inset 0 0 0 2px var(--s-acc)}
+.app-week .d.fut .cell{background:transparent;border:1px solid var(--s-line2)}
+.app-week .n{font-size:18px;line-height:22px;font-weight:600}
+.app-week .d.now .n{color:var(--s-acc)}
+.app-week .d.fut .n{color:var(--s-mut)}
+.app-week .dots{display:flex;gap:3px;align-items:center;justify-content:center;height:6px}
+.app-week .dots i{width:6px;height:6px;border-radius:3px;display:block}
+
+.app-mood{display:flex;flex-direction:column;align-items:center}
+.app-mood .pic{position:relative;width:72px;height:72px;margin-bottom:-3px;flex:none}
+.app-mood .pic .glow{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:78px;height:78px;border-radius:50%;filter:blur(7px);
+  background:radial-gradient(circle,rgba(110,166,217,.80) 0%,rgba(149,192,229,.46) 40%,rgba(196,219,239,0) 70%)}
+.app-mood .pic i{position:absolute;top:26px;width:8px;height:8px;border-radius:50%;background:#16212B}
+.app-mood .pic i.l{left:22px}
+.app-mood .pic i.r{right:22px}
+.app-mood h1{font-family:var(--screen);font-size:24px;line-height:28px;font-weight:700;letter-spacing:0;
+  text-align:center;color:var(--s-head);margin:0}
+.app-mood .row{display:flex;gap:12px;align-items:flex-start;justify-content:center;margin-top:16px;width:100%}
+.app-mood .m{display:flex;flex-direction:column;align-items:center;padding:12px 16px;border-radius:12px;background:#fff}
+.app-mood .m .ico{width:32px;height:32px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center}
+.app-mood .m .lb{font-size:14px;line-height:19px;font-weight:600;color:var(--s-head);margin-top:2px;white-space:nowrap}
+
+.app-card{width:100%;padding:16px;border-radius:24px;background:#fff;display:flex;flex-direction:column}
+.app-card h2{font-family:var(--screen);font-size:20px;line-height:26px;font-weight:600;letter-spacing:0;margin:0}
+.app-card .hd{display:flex;align-items:center;justify-content:space-between;width:100%}
+.app-card .more{font-size:18px;font-weight:500;color:var(--s-acc);text-decoration:underline;white-space:nowrap}
+.app-pick{gap:12px}
+.app-pick .chips{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.app-pick .c{display:flex;gap:10px;align-items:center;min-height:60px;padding:0 18px;border-radius:30px}
+.app-pick .c span{font-size:18px;font-weight:500;color:var(--s-ink);white-space:nowrap}
+.app-today{gap:8px;border-radius:20px}
+.app-today ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;width:100%}
+.app-today li{display:flex;gap:12px;align-items:center;min-height:72px;padding:10px 0}
+.app-today li+li{border-top:1px solid var(--s-line)}
+.app-today .circ{width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;flex:none}
+.app-today .tx{display:flex;flex-direction:column;gap:2px;flex:1 0 0;min-width:1px}
+.app-today .t{font-size:18px;line-height:24px;font-weight:600}
+.app-today .s{font-size:16px;line-height:22px;color:var(--s-mut)}
+
+.app-fade{position:absolute;left:0;right:0;bottom:0;height:128px;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(239,240,245,0) 0%,rgba(239,240,245,.92) 46%,var(--s-bg) 72%)}
+.app-tabs{position:absolute;left:18px;top:764px;width:358px;height:72px;display:flex;align-items:center;
+  justify-content:space-between;padding:7px;border:1px solid rgba(255,255,255,.9);border-radius:36px;
+  background:#fff;box-shadow:0 8px 14px rgba(15,24,33,.16);z-index:2}
+.app-tabs .tb{display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;
+  width:113px;height:64px;border-radius:30px;flex:none}
+.app-tabs .tb.on{background:var(--s-acc-soft)}
+.app-tabs .slot{display:block;width:24px;height:24px;background:transparent}
+.app-tabs .tb span{font-size:16px;line-height:20px;font-weight:500;color:var(--s-mut);white-space:nowrap}
+.app-tabs .tb.on span{color:var(--s-acc)}
+.app-tabs .fab{position:absolute;left:50%;top:-32px;transform:translateX(-50%);width:64px;height:64px;
+  border-radius:32px;background:var(--s-acc);display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 12px rgba(30,90,133,.35)}
+
+
+/* ══ Упрощённый экран · «Что происходит?» ══ */
+.app2{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink);display:flex;flex-direction:column;padding:62px 24px 24px}
+.app2 .app-stb{padding:0 24px 0 28px}
+.q-back{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:500;color:var(--s-ink)}
+.q-h1{font-family:var(--screen);font-size:29px;line-height:34px;font-weight:700;letter-spacing:-.01em;
+  color:var(--s-head);margin:16px 0 0}
+.q-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 18px;margin-top:20px}
+.q-c{min-height:135px;padding:16px;border-radius:20px;background:#fff;display:flex;flex-direction:column;gap:14px}
+.q-c .ic{width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;flex:none}
+.q-c .lb{font-size:19px;line-height:25px;font-weight:600;color:var(--s-ink)}
+.q-other{flex:1;display:flex;flex-direction:column;margin-top:16px;min-height:0}
+.q-add{min-height:66px;border:2px dashed #8B96A3;border-radius:33px;display:flex;align-items:center;
+  justify-content:center;gap:10px;font-size:19px;font-weight:500;color:var(--s-ink)}
+.q-sp{flex:1;min-height:16px}
+.q-voice{min-height:86px;border-radius:26px;background:var(--s-acc);display:flex;align-items:center;
+  justify-content:center;gap:12px;color:#fff;font-size:21px;font-weight:600}
+
+
+/* ══ Голос · «Слушаю» и «Всё записал» ══ */
+.app3{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink);display:flex;flex-direction:column;padding:62px 24px 24px}
+.v-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px}
+.v-h1{font-family:var(--screen);font-size:34px;line-height:40px;font-weight:700;letter-spacing:-.015em;color:var(--s-head);margin:0}
+.v-rec{display:flex;align-items:center;gap:9px;padding:9px 16px;border-radius:99px;background:#DCEAF7;
+  font-size:17px;font-weight:600;color:var(--s-acc);white-space:nowrap}
+.v-rec i{width:11px;height:11px;border-radius:50%;background:var(--s-acc);display:block}
+.v-sub{font-size:19px;line-height:26px;color:var(--s-mut);margin:10px 0 0}
+.v-card{flex:1;min-height:0;margin-top:20px;padding:24px;border-radius:24px;background:#fff}
+.v-card p{margin:0;font-size:23px;line-height:31px;color:var(--s-ink)}
+.v-card p em{font-style:normal;color:#9AA3AD}
+.v-wave{display:flex;align-items:center;justify-content:center;gap:6px;height:56px;margin:14px 0 2px}
+.v-wave i{width:9px;border-radius:99px;background:var(--s-acc);display:block}
+.v-btns{display:flex;gap:12px;margin-top:12px}
+.v-btn{min-height:70px;border-radius:20px;display:flex;align-items:center;justify-content:center;gap:10px;
+  font-size:20px;font-weight:600}
+.v-btn.ghost{flex:0 0 36%;background:#fff;border:1.5px solid #8FB3CD;color:var(--s-ink)}
+.v-btn.solid{flex:1;background:var(--s-acc);color:#fff}
+
+.v-quote{display:flex;gap:14px;margin-top:18px;padding:20px;border-radius:20px;background:#E7EAF0}
+.v-quote .qm{font-family:Georgia,serif;font-size:58px;line-height:.72;color:#BFC6D0;flex:none}
+.v-quote b{display:block;font-size:19px;font-weight:700;margin-bottom:4px}
+.v-quote p{margin:0;font-size:19px;line-height:26px}
+.v-fields{margin-top:16px;border-radius:18px;background:#fff;border:1px solid #E1E6EC;overflow:hidden}
+.v-fields .r{padding:14px 18px}
+.v-fields .r+.r{border-top:1px solid #E7ECF1}
+.v-fields .lb{font-size:17px;line-height:23px;color:var(--s-mut)}
+.v-fields .vl{font-size:20px;line-height:27px;font-weight:700;color:var(--s-ink)}
+.v-foot{margin-top:auto;padding-top:16px;border-top:1px solid #DFE4EA}
+
+/* ══ Экран блокировки с Live Activity ══ */
+.app4{width:393px;height:852px;position:relative;overflow:hidden;background:#202E3B;
+  font-family:var(--screen);color:#fff;display:flex;flex-direction:column;align-items:center;padding:62px 24px 24px}
+.app4 .app-stb{background:transparent;color:#fff;position:absolute;top:0;left:0}
+.lk-d{margin-top:34px;font-size:19px;color:#C9D3DC}
+.lk-t{font-size:88px;line-height:1;font-weight:700;letter-spacing:-.03em;margin:6px 0 0}
+.lk-live{width:100%;margin-top:34px;padding:16px 16px 16px 20px;border-radius:24px;background:#BFD8F0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lk-live .lb{font-size:16px;color:#5A6B7A}
+.lk-live .nm{font-size:21px;line-height:28px;font-weight:700;color:var(--s-ink)}
+.lk-live .pill{display:flex;align-items:center;gap:7px;padding:10px 16px;border-radius:99px;
+  background:var(--s-acc);color:#fff;font-size:17px;font-weight:600;white-space:nowrap;flex:none}
+
+/* ══ Шторка «симптом ещё активен?» ══ */
+.app5{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg)}
+.app5 .dimmed{position:absolute;inset:0;filter:grayscale(1) contrast(.92) blur(1.4px)}
+.app5 .scrim{position:absolute;inset:0;background:rgba(32,44,56,.30)}
+.app5 .glowdot{position:absolute;right:26px;top:84px;width:62px;height:62px;border-radius:50%;
+  background:radial-gradient(circle,#fff 42%,rgba(255,255,255,0) 72%);filter:blur(3px)}
+.sh{position:absolute;left:0;right:0;bottom:0;top:286px;background:#fff;border-radius:28px 28px 0 0;
+  padding:20px 20px 24px;display:flex;flex-direction:column;font-family:var(--screen);color:var(--s-ink)}
+.sh .x{align-self:flex-end;width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.sh .pic{position:relative;width:72px;height:72px;align-self:center;margin:2px 0 6px}
+.sh .pic .glow{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:78px;height:78px;
+  border-radius:50%;filter:blur(7px);
+  background:radial-gradient(circle,rgba(110,166,217,.80) 0%,rgba(149,192,229,.46) 40%,rgba(196,219,239,0) 70%)}
+.sh .pic i{position:absolute;top:26px;width:8px;height:8px;border-radius:50%;background:#16212B}
+.sh .pic i.l{left:22px}
+.sh .pic i.r{right:22px}
+.sh h2{font-family:var(--screen);font-size:26px;line-height:33px;font-weight:700;letter-spacing:-.01em;
+  text-align:center;color:var(--s-head);margin:0}
+.sh-card{margin-top:18px;padding:18px;border-radius:20px;background:#DCEAF7;display:flex;flex-direction:column}
+.sh-since{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;
+  background:#fff;font-size:17px;font-weight:600;color:var(--s-acc);white-space:nowrap}
+.sh-card .nm{font-size:30px;line-height:38px;font-weight:700;margin:12px 0 10px}
+.sh-card .r{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 0}
+.sh-card .r+.r{border-top:1px solid #C7DCEF}
+.sh-card .r .lb{font-size:18px;color:var(--s-mut)}
+.sh-card .r .vl{font-size:18px;font-weight:700}
+.sh-btns{display:flex;gap:12px;margin-top:16px}
+.sh-btns span{flex:1;min-height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:600}
+.sh-btns .a{background:#F1F4F7;color:var(--s-ink)}
+.sh-btns .b{background:var(--s-acc);color:#fff}
+
+
+/* ══ Напоминание на главной · «Дополним информацию?» ══ */
+.app6{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink)}
+.rm-col{position:absolute;inset:0;display:flex;flex-direction:column;padding:62px 16px 0}
+.rm-top{display:flex;justify-content:flex-end}
+.rm-pic{position:relative;width:72px;height:72px;align-self:center;margin:16px 0 6px;flex:none}
+.rm-pic .glow{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:78px;height:78px;
+  border-radius:50%;filter:blur(7px);
+  background:radial-gradient(circle,rgba(110,166,217,.80) 0%,rgba(149,192,229,.46) 40%,rgba(196,219,239,0) 70%)}
+.rm-pic i{position:absolute;top:26px;width:8px;height:8px;border-radius:50%;background:#16212B}
+.rm-pic i.l{left:22px}
+.rm-pic i.r{right:22px}
+.rm-h1{font-family:var(--screen);font-size:26px;line-height:33px;font-weight:700;letter-spacing:-.01em;
+  text-align:center;color:var(--s-head);margin:0 4px}
+.rm-card{margin-top:22px;padding:18px;border-radius:24px;background:#DCEAF7;display:flex;flex-direction:column}
+.rm-since{align-self:flex-start;display:flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;
+  background:#fff;font-size:17px;font-weight:600;color:var(--s-acc);white-space:nowrap}
+.rm-card .nm{font-size:30px;line-height:38px;font-weight:700;margin:12px 0 14px}
+.rm-btns{display:flex;gap:12px}
+.rm-btns span{min-height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:600}
+.rm-btns .a{flex:0 0 44%;background:#fff;color:var(--s-ink)}
+.rm-btns .b{flex:1;background:var(--s-acc);color:#fff}
+
+/* ══ Окно «Новая запись» · шторка поверх главной ══ */
+.app7{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink)}
+.app7 .dimmed{position:absolute;inset:0;filter:grayscale(1) contrast(.92) blur(1.4px)}
+.app7 .scrim{position:absolute;inset:0;background:rgba(32,44,56,.34)}
+.ds{position:absolute;left:0;right:0;top:82px;bottom:0;background:#fff;border-radius:28px 28px 0 0;
+  display:flex;flex-direction:column;overflow:hidden}
+.ds-top{flex:none;padding:14px 20px 12px;border-bottom:1px solid #EAEDF1}
+.ds-top .x{display:flex;justify-content:flex-end}
+.ds-top .ti{display:block;text-align:center;font-size:18px;font-weight:600;margin-top:-6px}
+.ds-scroll{flex:1;min-height:0;position:relative;overflow:hidden}
+.ds-col{padding:28px 20px 40px;display:flex;flex-direction:column;gap:30px}
+.ds-sec{display:flex;flex-direction:column;gap:16px}
+.ds-sec h2{font-family:var(--screen);font-size:20px;line-height:26px;font-weight:600;letter-spacing:0;margin:0}
+.ds-sec h3{font-family:var(--screen);font-size:18px;line-height:24px;font-weight:600;letter-spacing:0;margin:0}
+.ds-sec .hint{font-size:16px;line-height:22px;color:var(--s-mut);margin:-8px 0 0}
+.ds-pills{display:flex;flex-wrap:wrap;gap:12px}
+.ds-p{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 20px;border-radius:28px}
+.ds-p span{font-size:18px;font-weight:500;color:var(--s-ink);white-space:nowrap}
+.ds-p.dash{border:2px dashed #8B96A3;background:transparent}
+.ds-find{display:flex;gap:12px;align-items:center}
+.ds-inp{flex:1;display:flex;align-items:center;gap:10px;min-height:52px;padding:0 16px;
+  border:1.5px solid #D6DCE3;border-radius:14px;font-size:18px;color:#7B8692}
+.ds-micb{width:52px;height:52px;border-radius:14px;background:#EFF1F4;display:flex;align-items:center;justify-content:center;flex:none}
+.ds-note{min-height:84px;border:1.5px solid #D6DCE3;border-radius:16px;padding:14px 16px;
+  font-size:18px;line-height:24px;color:#7B8692}
+.ds-cap{font-size:16px;line-height:22px;color:var(--s-mut)}
+.ds-foot{flex:none;background:#fff;border-top:1px solid #EAEDF1;
+  padding:14px 20px 22px;display:flex;gap:12px}
+.ds-foot span{min-height:62px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;
+  font-size:18px;font-weight:600}
+.ds-foot .a{flex:0 0 44%;background:#EFF1F4;color:var(--s-ink)}
+.ds-foot .b{flex:1;background:var(--s-acc);color:#fff}
+
+/* ══ Окно конкретизации · «Выраженность» ══ */
+.app8{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink)}
+.app8 .dimmed{position:absolute;inset:0;filter:grayscale(1) contrast(.92) blur(1.4px)}
+.app8 .scrim{position:absolute;inset:0;background:rgba(32,44,56,.34)}
+.ex{position:absolute;left:0;right:0;top:62px;bottom:0;background:#fff;border-radius:28px 28px 0 0;
+  display:flex;flex-direction:column;overflow:hidden}
+.ex-head{flex:none;padding:10px 20px 0;position:relative}
+.ex-grab{width:46px;height:5px;border-radius:99px;background:#C8CDD4;margin:0 auto}
+.ex-x{position:absolute;right:18px;top:14px}
+.ex-scroll{flex:1;min-height:0;overflow:hidden}
+.ex-col{padding:18px 20px 36px;display:flex;flex-direction:column;gap:30px}
+.ex-h1{font-family:var(--screen);font-size:24px;line-height:31px;font-weight:600;letter-spacing:0;margin:0}
+.ex-sub{font-size:16px;line-height:22px;color:var(--s-mut);margin:6px 0 0}
+.ex-sec{display:flex;flex-direction:column;gap:14px}
+.ex-sec h3{font-family:var(--screen);font-size:20px;line-height:26px;font-weight:600;letter-spacing:0;margin:0}
+.ex-sec h3 em{font-style:normal;font-weight:400;color:var(--s-mut)}
+.ex-row{display:flex;flex-wrap:wrap;gap:10px}
+.ex-p{display:flex;align-items:center;gap:9px;min-height:56px;padding:0 20px;border-radius:28px;
+  background:#ECEEF2;font-size:18px;font-weight:500;white-space:nowrap}
+.ex-note{min-height:84px;border:1.5px solid #D6DCE3;border-radius:16px;padding:14px 16px;
+  font-size:18px;line-height:24px;color:#7B8692}
+.ex-cap{font-size:16px;line-height:22px;color:var(--s-mut);margin:0}
+.ex-foot{flex:none;background:#fff;border-top:1px solid #EAEDF1;padding:14px 20px 24px}
+.ex-foot span{display:flex;align-items:center;justify-content:center;min-height:62px;border-radius:16px;
+  background:var(--s-acc);color:#fff;font-size:19px;font-weight:600}
+
+
+/* ══ Аналитика · обзор за период ══ */
+.app10{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink)}
+.an-fix{position:absolute;left:0;right:0;top:62px;z-index:3;background:var(--s-bg);padding:0 16px 10px}
+.an-head{display:flex;align-items:center;gap:10px;height:56px}
+.an-mes{display:flex;align-items:center;gap:7px;height:48px;padding:0 14px;border-radius:16px;background:#fff;
+  font-size:19px;font-weight:600;white-space:nowrap}
+.an-per{flex:1;display:flex;align-items:center;justify-content:center;gap:12px}
+.an-per b{font-size:23px;font-weight:700;letter-spacing:-.01em}
+.an-seg{margin-top:10px;display:flex;gap:6px;padding:6px;border-radius:24px;background:#fff}
+.an-seg span{flex:1;height:56px;border-radius:20px;display:flex;align-items:center;justify-content:center;
+  font-size:19px;font-weight:600;color:var(--s-mut)}
+.an-seg span.on{background:var(--s-acc);color:#fff}
+.an-scroll{position:absolute;left:0;right:0;top:200px;bottom:0;overflow:hidden}
+.an-col{padding:12px 16px 170px;display:flex;flex-direction:column;gap:14px}
+.an-card{background:#fff;border-radius:24px;padding:18px}
+.an-card h2{font-family:var(--screen);font-size:20px;line-height:26px;font-weight:700;letter-spacing:0;margin:0}
+.an-card .cap{font-size:16px;line-height:22px;color:var(--s-mut);margin:2px 0 0}
+.an-g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.an-st{background:#fff;border-radius:20px;padding:16px;display:flex;flex-direction:column;min-height:120px}
+.an-st .lb{font-size:16px;line-height:21px;color:var(--s-mut)}
+.an-st .vl{font-size:22px;line-height:28px;font-weight:700;margin-top:8px}
+.an-st .sb{font-size:16px;line-height:21px;color:var(--s-mut);margin-top:2px}
+.an-st.grey{background:#EFF1F4;border-radius:16px;min-height:108px}
+.an-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.an-exp{width:44px;height:44px;border-radius:14px;background:#F1F3F6;display:flex;align-items:center;justify-content:center;flex:none}
+.an-chart{display:flex;align-items:flex-end;gap:1px;height:120px;margin-top:18px}
+.an-chart .dy{flex:1;display:flex;align-items:flex-end;justify-content:center;gap:2px;height:100%}
+.an-chart .dy i{width:7px;border-radius:3px;display:block}
+.an-chart .dy u{width:9px;height:4px;border-radius:2px;background:#D6DCE3;display:block}
+.an-ax{display:flex;margin-top:8px;font-size:17px;color:var(--s-mut)}
+.an-ax span{flex:1;text-align:center}
+.an-ax span:first-child{text-align:left}
+.an-ax span:last-child{text-align:right}
+.an-leg{margin-top:12px;display:flex;flex-direction:column}
+.an-leg .r{display:flex;align-items:center;gap:12px;padding:7px 0;font-size:18px}
+.an-leg .r i{width:18px;height:18px;border-radius:5px;flex:none}
+.an-leg .r i.dash{height:5px;border-radius:3px;background:#B7C1CA}
+.an-leg .r span{flex:1}
+.an-leg .r b{font-weight:700}
+.an-leg .r.mut span{color:var(--s-mut)}
+.an-all{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 0 2px;
+  font-size:19px;font-weight:600;color:var(--s-acc)}
+.an-btn{margin-top:14px;min-height:62px;border-radius:16px;background:#DCEAF7;color:var(--s-acc);
+  display:flex;align-items:center;justify-content:center;gap:10px;font-size:19px;font-weight:600}
+.an-bars{display:flex;flex-direction:column;margin-top:10px}
+.an-bars .r{display:flex;align-items:center;gap:12px;padding:7px 0}
+.an-bars .r .lb{width:120px;font-size:18px}
+.an-bars .r .tr{flex:1;height:14px;border-radius:99px;background:#EEF1F4;overflow:hidden}
+.an-bars .r .tr i{display:block;height:100%;border-radius:99px;background:var(--s-acc)}
+.an-bars .r .tr i.gr{background:#A6B0BA}
+.an-bars .r .vl{width:34px;text-align:right;font-size:18px;font-weight:700}
+.an-sym{display:flex;flex-direction:column;margin-top:6px}
+.an-sym .it{padding:14px 0}
+.an-sym .it+.it{border-top:1px solid var(--s-line)}
+.an-sym .hd2{display:flex;align-items:center;gap:12px}
+.an-sym .ic{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:none}
+.an-sym .tx{flex:1;min-width:1px;display:flex;flex-direction:column}
+.an-sym .t{font-size:19px;line-height:25px;font-weight:700}
+.an-sym .s{font-size:17px;line-height:23px;color:var(--s-mut)}
+.an-sym .dl{margin-top:10px;display:flex;gap:9px;align-items:flex-start;padding:12px 14px;border-radius:14px;
+  background:#F1F3F6;font-size:17px;line-height:23px;color:var(--s-mut)}
+.an-pair{display:flex;align-items:center;gap:14px;margin-top:14px}
+.an-pair .duo{position:relative;width:98px;height:60px;flex:none}
+.an-pair .duo span{position:absolute;top:0;width:60px;height:60px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center}
+.an-pair .duo span.a{left:0;background:#FBEFC8}
+.an-pair .duo span.b{right:0;background:#FADFBF}
+.an-pair .t{font-size:20px;line-height:26px;font-weight:700}
+.an-pair .s{font-size:17px;line-height:23px;color:var(--s-mut)}
+.an-cells{display:flex;gap:8px;margin-top:16px}
+.an-cells i{flex:1;height:38px;border-radius:9px;background:#A9C4DC;display:block}
+.an-cells i.off{background:#EEF1F4}
+.an-cl{display:flex;gap:20px;align-items:center;margin-top:10px;font-size:17px}
+.an-cl span{display:flex;align-items:center;gap:8px}
+.an-cl i{width:18px;height:18px;border-radius:5px;background:#A9C4DC;display:block}
+.an-cl i.off{background:#EEF1F4}
+.an-note{margin-top:14px;display:flex;gap:10px;padding:14px;border-radius:14px;background:#F1F3F6;
+  font-size:17px;line-height:23px;color:var(--s-mut)}
+.an-p{font-size:18px;line-height:25px;margin:8px 0 0}
+
+/* ══ Рекомендация при тревожных симптомах ══ */
+.app9{width:393px;height:852px;position:relative;overflow:hidden;background:var(--s-bg);
+  font-family:var(--screen);color:var(--s-ink)}
+.app9 .dimmed{position:absolute;inset:0;filter:grayscale(1) contrast(.92) blur(1.4px)}
+.app9 .scrim{position:absolute;inset:0;background:rgba(32,44,56,.38)}
+.sos{position:absolute;left:0;right:0;top:304px;bottom:0;background:#fff;border-radius:28px 28px 0 0;
+  padding:16px 20px 26px;display:flex;flex-direction:column}
+.sos-x{align-self:flex-end;width:34px;height:34px;display:flex;align-items:center;justify-content:center}
+.sos-chip{align-self:flex-start;display:flex;align-items:center;gap:8px;margin-top:2px;
+  padding:7px 14px;border-radius:99px;background:var(--s-acc-soft);color:var(--s-acc);
+  font-size:16px;font-weight:600}
+.sos-h1{font-family:var(--screen);font-size:28px;line-height:35px;font-weight:700;letter-spacing:-.01em;
+  color:var(--s-head);margin:14px 0 0}
+.sos-p{font-size:17px;line-height:25px;color:var(--s-ink);margin:12px 0 0}
+.sos-p b{font-weight:700}
+.sos-sp{flex:1;min-height:20px}
+.sos-btn{min-height:68px;border-radius:18px;background:var(--s-acc);color:#fff;
+  display:flex;align-items:center;justify-content:center;gap:11px;font-size:20px;font-weight:600}
+
+@keyframes catroll{from{transform:translateY(0)}to{transform:translateY(-2180px)}}
+.slide.on .canvas[data-anim] .ds-col{animation:catroll 30s linear infinite alternate}
+@media (prefers-reduced-motion:reduce){.slide.on .canvas[data-anim] .ds-col{animation:none}}
+
+/* ── Содержимое экранов (холст 440×956) ── */
+.cv{width:440px;height:956px;display:flex;flex-direction:column;font-family:var(--body);color:var(--ink);background:#fff}
+.cv .stb{height:56px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 30px 6px;font-size:16px;font-weight:600;flex:0 0 auto}
+.cv .pad{padding:0 20px 22px;display:flex;flex-direction:column;gap:12px;flex:1;min-height:0}
+.cv .t1{font-family:var(--display);font-weight:600;font-size:34px;letter-spacing:-0.035em;padding:6px 0 2px}
+.cv .lb{font-size:13px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.cv .bx{background:var(--bg);border-radius:18px;padding:15px 16px;display:flex;flex-direction:column;gap:4px;justify-content:center}
+.cv .bx.out{background:none;border:2px dashed var(--line)}
+.cv .bx.solid{background:var(--dark)}
+.cv .bx.solid .x{color:#fff}
+.cv .bx.blue{background:var(--accent-soft)}
+.cv .x{font-size:17px;line-height:1.3}
+.cv .x.lg{font-size:19px;font-weight:500}
+.cv .x.sm{font-size:14px;color:var(--muted)}
+.cv .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cv .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.cv .fill{flex:1;min-height:10px}
+.cv .home{width:140px;height:5px;border-radius:99px;background:#1D1D1D;opacity:.3;margin:6px auto 0;flex:0 0 auto}
+.cv.ios .home{background:#2A343B;opacity:.45}
+.cv .sig{display:flex;align-items:center;gap:6px}
+.cv .sig i{display:block;width:17px;height:12px;background:currentColor;border-radius:2px;opacity:.9}
+.cv .sig i.w{width:15px;border-radius:2px 2px 6px 6px}
+.cv .sig i.b{width:25px;height:12px;border-radius:3px;position:relative}
+.cv .tabs{height:58px;border-radius:999px;background:var(--bg);display:flex;align-items:center;justify-content:space-around;font-size:13px;color:var(--muted)}
+.cv .ring{box-shadow:0 0 0 3px var(--accent-deep),0 0 0 10px rgba(30,158,212,.22);border-radius:18px}
+
+/* обои домашнего экрана */
+.cv.ios{background:linear-gradient(168deg,#B9CAD4 0%,#DFE7EB 50%,#CBD9E0 100%)}
+.cv.ios .stb{color:#2A343B}
+.cv.ios .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px 12px;padding:14px 22px 0;align-content:start;flex:1}
+.cv.ios .ap{display:flex;flex-direction:column;align-items:center;gap:7px}
+.cv.ios .ap i{width:72px;height:72px;border-radius:19px;background:rgba(255,255,255,.72);display:block}
+.cv.ios .ap i.d{background:rgba(255,255,255,.52)}
+.cv.ios .ap u{font-size:13px;color:#283137;text-decoration:none;font-style:normal;text-align:center}
+.cv.ios .ap.on i{background:var(--accent);box-shadow:0 0 0 5px rgba(30,158,212,.38),0 10px 22px -6px rgba(10,108,148,.55)}
+.cv.ios .ap.on u{font-weight:600;color:#0D3344}
+.cv.ios .dk{margin:0 20px 10px;background:rgba(255,255,255,.44);border-radius:30px;padding:14px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.cv.ios .dk i{height:70px;border-radius:19px;background:rgba(255,255,255,.72);display:block}
+
+.cv.blank{background:#fff}
+
+/* выделение зоны на экране + стрелка */
+.ph{overflow:visible}
+.hl{position:absolute;left:4.65%;right:4.65%;top:var(--t,0);height:var(--h,0);
+  border:3px solid var(--ink);border-radius:20px;box-shadow:0 0 0 5px #fff;z-index:6;pointer-events:none}
+.hl:not([data-zone]){left:2.586%;right:2.586%}
+.hl .arw{position:absolute;left:calc(100% + 6px);top:50%;transform:translateY(-58%);
+  width:clamp(44px,3.8vw,62px);height:auto;overflow:visible}
+
+/* одиночный телефон: колонка уже */
+.rone{grid-template-columns:minmax(0,272px) minmax(0,520px);gap:clamp(28px,4vw,72px);justify-content:center;align-items:start}
+@media (max-width:819px){.rone{grid-template-columns:minmax(0,1fr);justify-content:stretch}}
+.solo{display:grid;grid-template-rows:auto auto auto;align-content:start;min-width:0}
+.slide.fit .solo{height:100%}
+.slide.fit .solo .ph{margin:0;align-self:start}
+
+.flag{background:var(--warn-soft,#F7F0E7);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.flag .tag{color:#8A5A2B}
+.flag .tag::before{background:#C08B4A}
+.flag p{font-size:14.5px;line-height:1.5;color:#5C4A33}
+
+@media (min-width:820px){
+  .slide.fit{height:calc(100dvh - 138px);min-height:430px}
+  .slide.fit > .rside,
+  .slide.fit > .rone{height:100%;min-height:0}
+  .slide.fit .pair{height:100%;min-height:0}
+  .slide.fit .variant{height:100%;min-height:0;grid-template-rows:auto auto auto minmax(0,1fr) auto}
+  .slide.fit .ph{margin:4px 0 0;align-self:start}
+  .slide.fit > .rside > .card,
+  .slide.fit > .rone > .card{overflow:auto}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Навигация по слайдам">
+  <button class="nbtn" id="prev" aria-label="Предыдущий слайд" title="Предыдущий слайд (←)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5.4 8.4 12l6.6 6.6"/></svg>
+  </button>
+  <span class="cnt" id="cnt" aria-live="polite"></span>
+  <button class="nbtn" id="next" aria-label="Следующий слайд" title="Следующий слайд (→)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5.4 15.6 12 9 18.6"/></svg>
+  </button>
+</nav>
+
+<main class="wrap">
+
+<!-- ═══ 1 · Титул ═══ -->
+<section class="slide">
+  <div class="card mid" style="min-height:clamp(250px,36vh,380px);align-items:center;text-align:center">
+    <p class="kick" style="margin:0">Дизайн-кейс · мобильное приложение · iOS</p>
+    <h1>Зафиксировать симптом<br>за <span style="color:var(--accent-deep)">одно касание</span></h1>
+    <p class="lead" style="color:var(--soft);text-align:center;margin:6px auto 0;max-width:46ch">Центральный флоу приложения для людей с ремиттирующим рассеянным склерозом</p>
+  </div>
+  <div class="row r3">
+    <div class="card tight"><div><span class="chip solid sm">Для кого</span></div><h4>Человек с ремиттирующим РС</h4><p class="sub" style="font-size:14.5px">Память, концентрация, зрение и моторика могут быть снижены именно в тот момент, когда нужно записать.</p></div>
+    <div class="card tight"><div><span class="chip solid sm">Что делаем</span></div><h4>Фиксация изменения состояния</h4><p class="sub" style="font-size:14.5px">И накопленная картина к разговору с врачом — без диагнозов, выводов и оценки обострения.</p></div>
+    <div class="card tight"><div><span class="chip solid sm">Главная метрика</span></div><h4>Завершённая запись</h4><p class="sub" style="font-size:14.5px">Признак успеха — не объём данных, а то, что запись вообще дошла до сохранения.</p></div>
+  </div>
+</section>
+
+<!-- ═══ 2 · Концепция ═══ -->
+<section class="slide">
+  <div class="row r21">
+    <div class="card concept">
+      <p class="tag light">Концепция</p>
+      <h2>Цена одной записи</h2>
+      <p class="lead">Снизить нагрузку до одного касания — особенно в тот момент, когда симптом только появился и человек хочет отметить его прямо сейчас.</p>
+      <div class="sp"></div>
+      <div class="note"><span>Всё остальное — выраженность, время, контекст, влияние на день — <b>необязательно</b> и добавляется позже, когда есть ресурс.</span></div>
+    </div>
+    <div class="card">
+      <p class="tag">Что мы учли</p>
+      <ol class="numlist">
+        <li><span class="n">01</span><div><h4>Детали теряются</h4><p>Между ухудшением и приёмом человек не восстанавливает последовательность: что именно изменилось, когда началось, сколько длилось. К визиту разговор начинается заново, а врач получает неполную картину.</p></div></li>
+        <li><span class="n">02</span><div><h4>Нагрузка убивает привычку</h4><p>Дневники бросают не из-за лени. Повторяющиеся поля, длинные чек-листы и обязательные шаги требуют ровно тех ресурсов, которых во время ухудшения меньше всего.</p></div></li>
+        <li><span class="n">03</span><div><h4>Польза не видна</h4><p>Если после заполнения ничего не происходит, смысл исчезает. Записи должны складываться в картину, которую человек сам может показать врачу.</p></div></li>
+      </ol>
+      <div class="card blue tight" style="margin-top:4px">
+        <p class="tag" style="color:var(--accent-deep)">Отсюда</p>
+        <p style="font-size:15.5px;line-height:1.5">Дать записать <b>прямо сейчас</b> и сделать это максимально просто. Все решения в кейсе выстроены вокруг этого: простота и функциональность важнее полноты данных.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 · Два входа ═══ -->
+<section class="slide fit">
+  <div class="row rside">
+      <div class="pair">
+      <div class="variant">
+        <h3>Тап по иконке</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas w440"><div class="cv ios">
+            <div class="stb"><span>9:41</span><span class="sig"><i></i><i class="w"></i><i class="b"></i></span></div>
+            <div class="apps">
+              <div class="ap"><i></i><u>Почта</u></div><div class="ap"><i class="d"></i><u>Календарь</u></div>
+              <div class="ap"><i></i><u>Заметки</u></div><div class="ap"><i class="d"></i><u>Фото</u></div>
+              <div class="ap on"><i></i><u>Дневник</u></div><div class="ap"><i class="d"></i><u>Здоровье</u></div>
+              <div class="ap"><i></i><u>Карты</u></div><div class="ap"><i class="d"></i><u>Погода</u></div>
+              <div class="ap"><i class="d"></i><u>Музыка</u></div><div class="ap"><i></i><u>Часы</u></div>
+              <div class="ap"><i class="d"></i><u>Настройки</u></div><div class="ap"><i></i><u>Файлы</u></div>
+              <div class="ap"><i></i><u>Банк</u></div><div class="ap"><i class="d"></i><u>Такси</u></div>
+              <div class="ap"><i class="d"></i><u>Подкасты</u></div><div class="ap"><i></i><u>Книги</u></div>
+            </div>
+            <div class="dk"><i></i><i></i><i></i><i></i></div>
+            <div class="home" style="margin-bottom:10px"></div>
+          </div></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap">Через домашний экран</p>
+      </div>
+
+      <div class="variant">
+        <h3>Боковая кнопка</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw hot"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas w440"><div class="cv ios" style="filter:saturate(.55) brightness(.97)">
+            <div class="stb"><span>9:41</span><span class="sig"><i></i><i class="w"></i><i class="b"></i></span></div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:0 28px;text-align:center">
+              <div style="font-family:var(--display);font-weight:400;font-size:86px;letter-spacing:-0.05em;color:#242E34;line-height:1">10:54</div>
+              <div style="font-size:17px;color:#46525A">среда, 4 ноября</div>
+              <div style="margin-top:22px;background:rgba(255,255,255,.88);border-radius:20px;padding:18px 22px;box-shadow:0 0 0 3px var(--accent-deep),0 0 0 11px rgba(30,158,212,.22)">
+                <div style="font-size:18px;font-weight:600;color:#17222A">Записать симптом</div>
+                <div style="font-size:14px;color:#56626A;margin-top:3px">открывается без разблокировки</div>
+              </div>
+            </div>
+            <div class="home" style="margin-bottom:12px"></div>
+          </div></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap" style="color:var(--accent-deep);font-weight:500">Через кнопку действия</p>
+      </div>
+    </div>
+
+      <div class="card">
+      <p class="kick" style="margin:0">01 · Первый экран</p>
+      <h2>Разный интерфейс для разного состояния</h2>
+      <p class="lead" style="margin-top:4px">Визуал первого экрана меняется в зависимости от состояния человека. Отталкиваемся от того, <b>как именно он заходит</b> в приложение.</p>
+      <p class="body2" style="margin-top:14px">Если есть силы и время, человек спокойно пройдёт несколько касаний: разблокировать экран, найти иконку, попасть по ней. Для такого входа экран может быть полнее.</p>
+      <p class="body2" style="margin-top:12px">Если симптомы тяжёлые и важно зафиксировать начало, запись нужно достать максимально быстро — быстрой командой, Back&nbsp;Tap или настроенной кнопкой действия.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · Что открывается ═══ -->
+<section class="slide fit">
+  <div class="row rside">
+    <div class="pair">
+      <div class="variant">
+        <h3>Обычная главная</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app"></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap">После тапа по иконке</p>
+      </div>
+
+      <div class="variant">
+        <h3>Упрощённый экран</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw hot"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="quick"></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap" style="color:var(--accent-deep);font-weight:500">После боковой кнопки</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <p class="kick" style="margin:0">01 · Первый экран → результат</p>
+      <h2>Что открывается в каждом случае</h2>
+      <p class="lead" style="margin-top:4px">Разница — в <b>количестве информации</b> на главном экране.</p>
+      <p class="body2" style="margin-top:14px">При обычном входе на экране помещается больше: календарь, самочувствие, симптомы, уже отмеченное за день, навигация. В упрощённом остаётся только то, ради чего пришли, — отметить симптом.</p>
+      <p class="body2" style="margin-top:12px">Составляющие экрана разберём чуть дальше.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · Разделитель ═══ -->
+<section class="slide">
+  <div class="card mid" style="min-height:clamp(320px,48vh,460px)">
+    <p class="kick" style="margin:0">02 · Главный экран</p>
+    <h1 style="font-size:clamp(32px,5vw,60px)">Разберём первый экран по частям</h1>
+    <p class="lead" style="color:var(--soft);max-width:54ch;margin-top:6px">Четыре блока обычной главной — в том порядке, в каком их встречает человек.</p>
+    <div class="meta" style="margin-top:14px">
+      <span class="chip">Календарь недели</span>
+      <span class="chip">Уточнение по состоянию</span>
+      <span class="chip">Личные симптомы</span>
+      <span class="chip">Что отмечено за день</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · Календарь ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="week"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Обычная главная</p>
+    </div>
+
+    <div class="card">
+      <h2>Календарь прямо на главной</h2>
+      <p class="lead">Неделя наверху сразу показывает, какой сегодня день. И даёт поставить запись на вчера — если симптом запомнился, а записать его тогда не вышло.</p>
+      <p class="body-p"><b class="k">Заодно короткая динамика.</b> Точки под числами показывают, были симптомы в предыдущие дни или нет. Это мини-аналитика по цветам: чтобы сориентироваться, не заходя в раздел с графиками.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 · Уточнение по состоянию ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="mood"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Обычная главная</p>
+    </div>
+
+    <div class="card">
+      <h2>Короткое уточнение по состоянию</h2>
+      <p class="lead">Под календарём — необязательный вопрос об общем самочувствии. Отвечать не нужно: он не преграждает путь к записи симптома.</p>
+      <p class="body-p"><b class="k">Пока это только идея.</b> Мы не знаем, нужна ли такая общая отметка врачу или самому человеку помимо конкретных симптомов — требуется экспертная оценка, и от блока, возможно, стоит отказаться.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8 · Симптомы ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app" data-off="96"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="pick"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Обычная главная</p>
+    </div>
+
+    <div class="card">
+      <h2>Симптомы сразу на экране</h2>
+      <p class="lead">Симптомы, наиболее частые у конкретного человека. Он настраивает их заранее — в онбординге или в настройках.</p>
+      <p class="body-p"><b class="k">Одно касание — запись.</b> Если симптом частый, нет смысла убирать его с первой страницы. При этом набор будет разным у разных людей: и сами симптомы, и формулировки, которыми человек их называет.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 9 · Что отмечено за день ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app" data-off="400"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="today"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Обычная главная · экран прокручен</p>
+    </div>
+
+    <div class="card">
+      <h2>Что уже отмечено за день</h2>
+      <p class="lead">Блок появляется, если за день симптомы уже фиксировались, а человек добавляет новое. Здесь экран прокручен — в обычном состоянии блок лежит ниже.</p>
+      <p class="body-p"><b class="k">Не мешает основному пути.</b> До него можно и не доходить: это справочная информация в конце экрана, а не шаг сценария.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw hot"></b><b class="k cam"></b>
+<div class="scr"><div class="canvas" data-screen="quick"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="symptoms"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Упрощённый экран</p>
+    </div>
+
+    <div class="card">
+      <h2>При быстром входе остаются только симптомы</h2>
+      <p class="lead">Экран сжимается до главного: самые частые симптомы крупными целями. Ни самочувствия, ни обзора, ни навигации.</p>
+      <p class="body-p">Главное — снизить когнитивную нагрузку, чтобы записать быстрее. Поэтому здесь только основные симптомы и «Другое».</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw hot"></b><b class="k cam"></b>
+<div class="scr"><div class="canvas" data-screen="quick"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="other"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Упрощённый экран</p>
+    </div>
+
+    <div class="card">
+      <h2>Другое и голос на том же экране</h2>
+      <p class="lead">Если нужного симптома нет в списке, уходить на другой экран не придётся — его можно добавить прямо здесь.</p>
+      <p class="body-p">Ещё проще наговорить. Сказанное агент разбирает на симптом и другие характеристики, если они прозвучали.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 12 · Голосовой ввод ═══ -->
+<section class="slide fit">
+  <div class="row rside">
+    <div class="pair">
+      <div class="variant">
+        <h3>Запись голосом</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="voice"></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap">Говорит как удобно</p>
+      </div>
+
+      <div class="variant">
+        <h3>Разбор сказанного</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="review"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="parsed"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+        <p class="phcap" style="color:var(--accent-deep);font-weight:500">Агент достал нужное</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Голосовой ввод тоже помогает</h2>
+      <p class="lead">Человек рассказывает как умеет: что чувствует, когда началось, что мешает. Агент сам достаёт из сказанного симптом, время начала и возможную причину — выбирать из списков не нужно.</p>
+      <p class="body-p"><b class="k">Второй экран под вопросом.</b> Если человек диктует, ему, скорее всего, плохо — разбирать прямо сейчас, верно ли его поняли, он не готов. Для нас важно другое: после «Готово» момент уже зафиксирован. Поправить формулировки можно позже, когда станет легче — механизмы для этого есть (следующий слайд).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 13 · Виджет и возврат к записи ═══ -->
+<section class="slide fit">
+  <div class="row rside">
+    <div class="pair">
+      <div class="variant">
+        <h3>Экран блокировки</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw hot"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="lock"></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap">Пока симптом идёт</p>
+      </div>
+
+      <div class="variant">
+        <h3>Следующий заход</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="sheet"></div></div>
+          <div class="island"></div>
+        </div>
+        <p class="phcap" style="color:var(--accent-deep);font-weight:500">Уточнение по записи</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Виджет напоминает о симптоме<br>и даёт скорректировать его позже</h2>
+      <p class="lead">В остром состоянии человек не заполнит всё аккуратно — важно отметить сам симптом. Запись остаётся открытой, и на экране блокировки видно, сколько она уже идёт. Когда станет легче, оттуда же можно её завершить.</p>
+      <p class="body-p"><b class="k">Живая плашка живёт недолго.</b> Поэтому мы не рассчитываем только на неё: даже если она пропадёт, при следующем заходе в приложение человека первым встретит окно с последним симптомом — изменить, дополнить или завершить.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 14 · Подробная запись ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="app"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="record" data-fit="box"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Обычная главная</p>
+    </div>
+
+    <div class="card">
+      <h2>Подробная запись симптома</h2>
+      <p class="lead">Готовых симптомов на главной может не хватить: появилось что-то новое, чего раньше не было, или нужный симптом просто не вынесен на первый экран.</p>
+      <p class="body-p"><b class="k">Для таких случаев — «Запись».</b> Центральная кнопка открывает полную форму: там можно найти подходящую формулировку или завести свою.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 15 · Мои симптомы в каталоге ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="detail"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="mine"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Окно записи</p>
+    </div>
+
+    <div class="card">
+      <h2>Каталог симптомов</h2>
+      <p class="lead">При нажатии на «Запись» поверх главной открывается окно записи. Первым в нём идёт раздел «Мои симптомы» — он остаётся и здесь. В нём может быть больше позиций, чем на главной: редкие симптомы, которые не выносятся на первый экран.</p>
+      <p class="body-p"><b class="k">Формулировки — свои.</b> Человек называет симптом так, как ему удобно, и дальше встречает именно это название. Это персонализация интерфейса, а не подгонка под справочник.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 16 · Поиск и голос ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="detail" data-scrollto="find"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="find"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Окно записи</p>
+    </div>
+
+    <div class="card">
+      <h2>Сначала поиск, а не новый симптом</h2>
+      <p class="lead">Под своими симптомами — поиск по каталогу и микрофон. Прежде чем заводить новую формулировку, можно проверить, нет ли в каталоге близкой по смыслу.</p>
+      <p class="body-p"><b class="k">Голосом — если печатать тяжело.</b> Микрофон стоит рядом с полем: это не отдельный режим, а второй способ ввести то же самое.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 17 · Каталог целиком ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="detail" data-scrollto="cats" data-align="top" data-anim></div></div>
+          <div class="island"></div>
+        </div>
+      <p class="phcap">Каталог целиком</p>
+    </div>
+
+    <div class="card">
+      <h2>Большой каталог не мешает</h2>
+      <p class="lead">В каталоге семь разделов: движение и сила, чувствительность и боль, зрение, равновесие и речь, мышление и настроение, энергия и сон, мочевой пузырь и кишечник. Список подробный — и листать его целиком не нужно.</p>
+      <p class="body-p"><b class="k">Нагрузка от этого не растёт.</b> Во-первых, свой симптом можно было создать сразу и положить в первый раздел. Во-вторых, поиск находит близкую формулировку по смыслу — до длинного списка дело доходит редко.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 18 · Уточнение после выбора ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ex"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="rec"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Уточнение симптома</p>
+    </div>
+
+    <div class="card">
+      <h2>Уточнение после выбора симптома</h2>
+      <p class="lead">Неважно, откуда выбран симптом — с главной или из подробного окна: дальше открывается карточка, где его можно конкретизировать.</p>
+      <p class="body-p"><b class="k">Уточнять необязательно.</b> Пусть человек и зашёл в расширенный режим — он мог сделать это по ошибке, и заставлять мы его не будем. Запись о симптоме уже сохранена, дополнить её можно в любой момент.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 19 · Выраженность ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ex"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="how"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Уточнение симптома</p>
+    </div>
+
+    <div class="card">
+      <h2>Степень выраженности — словами</h2>
+      <p class="lead">Врачу важно понимать не только сам симптом, но и насколько он выражен.</p>
+      <p class="body-p"><b class="k">Без цифр 1–2–3.</b> В задании рекомендована нумерация, но мы считаем, что она усложнит восприятие — и человеку, и врачу. Три текстовые категории комфортно помещаются в одну строку и читаются по нарастанию: слабо, умеренно, сильно.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 20 · Когда началось ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ex"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="when"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Уточнение симптома</p>
+    </div>
+
+    <div class="card">
+      <h2>Когда началось</h2>
+      <p class="lead">Самый частый ответ — «Сейчас» или «Сегодня». Но человек может вспомнить и вчерашний эпизод, поэтому «Вчера» остаётся рядом. Для этих двух вариантов дальше можно уточнить, сколько симптом длился.</p>
+      <p class="body-p"><b class="k">Открытый вопрос — произвольная дата.</b> Пока не уверены, нужна ли опция «иная дата». По данным, человек с рассеянным склерозом плохо помнит, что и когда происходило, — и выбор произвольного дня может дать неточные данные вместо точных.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 21 · Что могло повлиять ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ex" data-scrollto="why" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="why"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Уточнение · прокручено</p>
+    </div>
+
+    <div class="card">
+      <h2>Что могло повлиять</h2>
+      <p class="lead">По данным, на состояние влияют вполне конкретные вещи: жара, плохой сон, стресс, инфекция, цикл. Поэтому список остаётся — отметить можно в одно касание, а всё остальное дописать в заметке.</p>
+      <p class="body-p"><b class="k">Это нужно для аналитики.</b> В разделе аналитики мы отдельно предусмотрели разбор связей: как часто симптом совпадает с теми или иными обстоятельствами. Без таких отметок эту динамику не собрать.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 22 · Уточнять можно потом ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="remind"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="kept"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Главная при следующем заходе</p>
+    </div>
+
+    <div class="card">
+      <h2>Уточнения можно не делать совсем</h2>
+      <p class="lead">Все предыдущие шаги — выраженность, время начала, что повлияло — необязательные. Человек мог выбрать симптом и закрыть приложение: запись уже сохранена, и ничего не потеряно.</p>
+      <p class="body-p"><b class="k">Напоминание дождётся.</b> При следующем заходе главный экран встречает карточкой с последней записью: видно симптом и когда он был отмечен. Дальше человек решает сам — закрыть и оставить как есть или дополнить деталями.</p>
+      <p class="body-p">Так уточнения переносятся на момент, когда на них есть силы, — и не мешают записать симптом в то время, когда их нет.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 23 · Рекомендация при тревожных симптомах ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="sos"></div></div>
+          <div class="island"></div>
+        </div>
+      <p class="phcap">Рекомендация поверх главной</p>
+    </div>
+
+    <div class="card">
+      <h2>Когда нужен врач прямо сейчас</h2>
+      <p class="lead">Отдельные симптомы могут говорить не о привычном течении рассеянного склероза, а о состоянии, при котором помощь нужна срочно. Если такой симптом отмечен впервые, поверх экрана появляется рекомендация обратиться к врачу или вызвать скорую.</p>
+      <p class="body-p"><b class="k">Блок экспериментальный.</b> Приложение не ставит диагнозов и не заменяет врача — оно лишь подсказывает, что с этим симптомом стоит показаться специалисту сейчас, а не ждать. Формулировки ещё предстоит проверить вместе с медиками: здесь легко напугать вместо того, чтобы помочь.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══ 24 · Аналитика · зачем ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana"></div></div>
+          <div class="island"></div>
+        </div>
+      <p class="phcap">Аналитика · обзор за месяц</p>
+    </div>
+
+    <div class="card">
+      <h2>Аналитика — ради неё всё и копится</h2>
+      <p class="lead">Записи имеют смысл, когда складываются в картину: видно, что менялось за период, с чем совпадало и что показать врачу. Это же ответ на вопрос, зачем вести дневник дальше.</p>
+      <p class="body-p"><b class="k">Раздел проработан слабее остальных.</b> Он собран быстро, чтобы обозначить направление. Часть блоков наверняка уйдёт: мы ещё не проверяли, какие срезы действительно нужны человеку и врачу, а какие просто занимают экран.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 25 · Период и режимы ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="period"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+          <div class="hl" data-zone="mode"></div>
+        </div>
+      <p class="phcap">Шапка закреплена</p>
+    </div>
+
+    <div class="card">
+      <h2>Период и два режима</h2>
+      <p class="lead">Наверху — выбор периода: неделя, месяц, год. Стрелками можно перелистнуть на соседний период, не открывая список.</p>
+      <p class="body-p"><b class="k">Обзор или хронология.</b> Обзор — сводная картина за период. Хронология — подробно по дням: какие симптомы встречались, когда и сколько длились. Оба переключателя закреплены сверху и не уезжают при прокрутке.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 26 · Коротко ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="short"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Коротко за период</p>
+    </div>
+
+    <div class="card">
+      <h2>Самое важное — сразу четырьмя плитками</h2>
+      <p class="lead">Первое, что встречает человек, — короткие ответы на вопросы, которые он задаёт себе сам: что отмечалось чаще всего, сколько было сильных эпизодов, что длилось дольше всего, были ли записи дольше суток.</p>
+      <p class="body-p"><b class="k">Динамика за несколько секунд.</b> Не нужно разбирать графики, чтобы понять, стало хуже или лучше. Какие именно показатели сюда вынести — ещё предстоит проверить, но сам принцип короткой сводки наверху кажется рабочим.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 27 · График ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana" data-scrollto="chart" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="chart"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Записи по дням</p>
+    </div>
+
+    <div class="card">
+      <h2>График показывает соотношение</h2>
+      <p class="lead">Записи по дням: видно, в какие дни было густо, какие симптомы преобладали и как они распределились по месяцу. Цвет — симптом, рядом легенда с количеством.</p>
+      <p class="body-p"><b class="k">Инфографика берёт сравнение на себя.</b> Одним взглядом считывается то, что в списке записей пришлось бы пересчитывать вручную. Сам график мы ещё будем дорабатывать — здесь он обозначает смысл блока.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 28 · Плашки с цифрами ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana" data-scrollto="days" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="days"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Ниже по экрану</p>
+    </div>
+
+    <div class="card">
+      <h2>Плашки с цифрами — под вопросом</h2>
+      <p class="lead">Под графиком — дни с записями, день с наибольшим числом записей, дни без записей и самый долгий перерыв.</p>
+      <p class="body-p"><b class="k">Пока не уверены, что это нужно.</b> Часть цифр говорит скорее о дисциплине ведения дневника, чем о состоянии. Нужно оценить, помогает ли это человеку и врачу — или только утяжеляет экран.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 29 · Как сильно и по симптомам ═══ -->
+<section class="slide fit">
+  <div class="row rone">
+    <div class="solo">
+      <div></div>
+      <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana" data-scrollto="how" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="how"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+      <p class="phcap">Прокручено ниже</p>
+    </div>
+
+    <div class="card">
+      <h2>Выраженность и разбор по симптомам</h2>
+      <p class="lead">«Как сильно» показывает, какой тяжести были записи за период. Ниже «По симптомам»: сколько раз встречался каждый, сколько в сумме длился и как это соотносится с прошлым месяцем.</p>
+      <p class="body-p"><b class="k">От второго блока, возможно, откажемся.</b> Разбор по симптомам частично повторяет график и короткие плитки. Если он не даёт ничего нового, экран станет короче.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 30 · Совпадения и сводка ═══ -->
+<section class="slide fit">
+  <div class="row rside">
+    <div class="pair">
+      <div class="variant">
+        <h3>Совпадения</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana" data-scrollto="together" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="together"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+        <p class="phcap">Внизу обзора</p>
+      </div>
+      <div class="variant">
+        <h3>Сводка для врача</h3>
+        <div class="ph">
+          <div class="body"></div>
+          <b class="k act"></b><b class="k vu"></b><b class="k vd"></b><b class="k pw"></b><b class="k cam"></b>
+          <div class="scr"><div class="canvas" data-screen="ana" data-scrollto="prep" data-align="top"></div></div>
+          <div class="island"></div>
+          <div class="hl" data-zone="prep"><svg class="arw" viewBox="0 0 130 76" fill="none" aria-hidden="true"><path d="M118 8 C132 42 96 52 26 52" stroke="#fff" stroke-width="8" stroke-linecap="round"/><path d="M118 8 C132 42 96 52 26 52" stroke="#272727" stroke-width="2.6" stroke-linecap="round"/><path d="M26 52 l11,-6 v12 z" fill="#fff" stroke="#fff" stroke-width="6" stroke-linejoin="round"/><path d="M26 52 l11,-6 v12 z" fill="#272727"/></svg></div>
+        </div>
+        <p class="phcap" style="color:var(--accent-deep);font-weight:500">Самый низ раздела</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Совпадения и сводка для врача</h2>
+      <p class="lead">Блок «Часто отмечалось вместе» показывает, с какими обстоятельствами симптом совпадал: жара, еда, цикл, недосып. Люди и так это замечают — здесь совпадение видно в цифрах, с прямой оговоркой, что это не причина.</p>
+      <p class="body-p"><b class="k">Подготовка к приёму — отдельная история.</b> Сводка за период, где человек сам выбирает, что в неё войдёт, и смотрит её до экспорта. Скорее всего, выгрузку PDF закрепим сверху: перед визитом не придётся прокручивать весь раздел.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+(function(){
+'use strict';
+var slides=[].slice.call(document.querySelectorAll('.slide'));
+var prev=document.getElementById('prev'),next=document.getElementById('next'),
+    cnt=document.getElementById('cnt');
+var i=0;
+
+
+/* холст экрана 440×956 вписывается в область экрана рамки */
+function setBar(){}
+
+var PH_RATIO=464/980;
+function fitPhones(){
+  var sl=document.querySelector('.slide.on'); if(!sl) return;
+  if(!window.matchMedia('(min-width:820px)').matches||!sl.classList.contains('fit')){
+    [].forEach.call(sl.querySelectorAll('.ph'),function(ph){ph.style.width='';ph.style.height='';});
+    return;
+  }
+  var list=[].slice.call(sl.querySelectorAll('.ph'));
+  if(!list.length) return;
+  list.forEach(function(ph){ph.style.width='';ph.style.height='';});
+  var slBottom=sl.getBoundingClientRect().bottom;
+  var widths=list.map(function(ph){
+    var cell=ph.parentElement, cs=getComputedStyle(cell);
+    var gap=parseFloat(cs.rowGap)||0, below=0, seen=false;
+    [].forEach.call(cell.children,function(ch){
+      if(ch===ph){seen=true;return}
+      if(seen) below+=ch.getBoundingClientRect().height+gap;
+    });
+    below+=parseFloat(cs.paddingBottom)||0;
+    // считаем от реального низа слайда, а не от высоты ячейки
+    var availH=Math.max(160,slBottom-ph.getBoundingClientRect().top-below-10);
+    var availW=Math.max(120,cell.clientWidth);
+    return Math.min(availW,availH*PH_RATIO);
+  });
+  var w=Math.floor(Math.min.apply(null,widths));
+  list.forEach(function(ph){ph.style.width=w+'px';ph.style.height=Math.round(w/PH_RATIO)+'px';});
+}
+
+function matchCard(){
+  var sl=document.querySelector('.slide.on'); if(!sl) return;
+  var row=sl.querySelector('.rside,.rone');
+  var card=row&&row.querySelector(':scope > .card');
+  if(!card){return;}
+  card.style.height='';
+  if(!window.matchMedia('(min-width:820px)').matches||!sl.classList.contains('fit')) return;
+  var phones=sl.querySelectorAll('.ph');
+  if(!phones.length) return;
+  var bottom=0;
+  [].forEach.call(phones,function(ph){bottom=Math.max(bottom,ph.getBoundingClientRect().bottom);});
+  var top=row.getBoundingClientRect().top;
+  var h=Math.round(bottom-top);
+  if(h>120) card.style.height=h+'px';
+}
+
+/* ══ Экран главной · собирается из данных прототипа ══ */
+var SVG={
+ gear:'<svg width="23" height="22" viewBox="0 0 24 24" fill="none" stroke="#16212B" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 14.5a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5v.2a2 2 0 0 1-4 0v-.1a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1h-.2a2 2 0 0 1 0-4h.1a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3h.1a1.6 1.6 0 0 0 1-1.5v-.2a2 2 0 0 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.5 1h.2a2 2 0 0 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>',
+ bad:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#A3361B" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M8.2 15.4c1-1.1 2.3-1.7 3.8-1.7s2.8.6 3.8 1.7"/><path d="M9 9.3h.01M15 9.3h.01"/></svg>',
+ ok:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M8.4 15h7.2"/><path d="M9 9.3h.01M15 9.3h.01"/></svg>',
+ good:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9.2"/><path d="M8.2 13.9c1 1.1 2.3 1.7 3.8 1.7s2.8-.6 3.8-1.7"/><path d="M9 9.3h.01M15 9.3h.01"/></svg>',
+ arm:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3.8v7.4M10.3 3v8.2M13.6 4.2v7M17 7.6v5.6c0 4-2.7 7.2-6.3 7.2-2 0-3.6-.9-4.8-2.5L3 13.4c-.5-.8-.3-1.8.5-2.2.7-.5 1.7-.2 2.2.5l1.3 1.9"/></svg>',
+ eye:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#5B3C9E" stroke-width="1.8" stroke-linecap="round"><path d="M2.2 12S5.8 5.5 12 5.5 21.8 12 21.8 12 18.2 18.5 12 18.5 2.2 12 2.2 12z"/><circle cx="12" cy="12" r="2.8"/></svg>',
+ tin:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3361B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.4 2.4 5 13.2h5.2L9.3 21.6 17 10.2h-5.2z"/></svg>',
+ pulse:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12h4l2.2-5.6 4.4 11.4 2.4-5.8h5.9"/></svg>',
+ walk:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.4" cy="4.1" r="2.1"/><path d="M10.4 21.4l2.3-5.4-2.9-2.8 1.1-5.1 3.5 2.3 2.6.9M9.9 11.2l1.9-3M11.6 16.1L9 21.4"/></svg>',
+ waves:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#A3361B" stroke-width="1.9" stroke-linecap="round"><path d="M3.2 9.6c1.4-1.9 2.9-1.9 4.3 0s2.9 1.9 4.3 0 2.9-1.9 4.3 0 2.9 1.9 4.3 0"/><path d="M3.2 15c1.4-1.9 2.9-1.9 4.3 0s2.9 1.9 4.3 0 2.9-1.9 4.3 0 2.9 1.9 4.3 0"/></svg>',
+ ear:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7.4 8.6a4.6 4.6 0 1 1 9.2 0c0 2.5-1.7 3.3-2.7 4.4-1 1.1-1.1 2.1-1.1 3.2a2.7 2.7 0 0 1-5.4 0"/><path d="M10.5 8.9a1.9 1.9 0 0 1 3.4 1.3"/></svg>',
+ pencil:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16.4 3.6a2.2 2.2 0 0 1 3.1 3.1L8 18.2l-4.1 1 1-4.1z"/></svg>',
+ mic:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 13.6v-1.8a7.6 7.6 0 0 1 15.2 0v1.8"/><path d="M4.4 12.8a2.3 2.3 0 0 1 4.6 0v1.6a2.3 2.3 0 0 1-4.6 0z"/><path d="M18.4 16c.9-.8 1.5-1.9 1.5-3.1M21.3 18c1.3-1.2 2.1-2.9 2.1-4.7"/></svg>',
+ book:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4.8" y="3.4" width="14.4" height="17.2" rx="2.2"/><path d="M8.9 3.4v17.2"/></svg>',
+ batt:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#8A6D0B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="7.6" width="15.6" height="8.8" rx="2.4"/><path d="M21 10.4v3.2"/><path d="M5.4 10.6h4.2v2.8H5.4z" fill="#8A6D0B" stroke="none"/></svg>',
+ head:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#45427E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.4 3.2a5.6 5.6 0 0 0-5.2 7.7 4 4 0 0 0 .6 6.3v3.6"/><path d="M15.4 3.2a5.6 5.6 0 0 1 2.3 10.7v6.9h-6"/><path d="M12.6 8.2h2.6"/></svg>',
+ search:'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#6E7A86" stroke-width="1.9" stroke-linecap="round"><circle cx="10.6" cy="10.6" r="6.6"/><path d="M15.6 15.6 20.4 20.4"/></svg>',
+ help:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.4 9.4a2.7 2.7 0 1 1 3.6 2.5c-.6.2-1 .8-1 1.5v.4"/><path d="M12 17.2h.01"/></svg>',
+ micBtn:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.8" width="6" height="11.4" rx="3"/><path d="M5.4 11.4a6.6 6.6 0 0 0 13.2 0M12 18v3.2"/></svg>',
+ sun:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>',
+ food:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.4 2.8v6.4a2.6 2.6 0 0 0 5.2 0V2.8M9 2.8v6.6M9 11.8v9.4"/><path d="M17.6 2.8c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.8.9 2.9 2.4 3.2v9.6"/></svg>',
+ drop:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.8c3.4 4.1 5.4 7 5.4 9.6a5.4 5.4 0 0 1-10.8 0c0-2.6 2-5.5 5.4-9.6z"/></svg>',
+ moon:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.4 14.2A8.6 8.6 0 0 1 9.8 3.6 8.8 8.8 0 1 0 20.4 14.2z"/></svg>',
+ zig:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.6 13.6h3.1l2.1-6.2 3.4 11 2.4-7 1.6 3.4h6.2"/></svg>',
+ virus:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="6.2"/><path d="M12 2.4v3.4M12 18.2v3.4M2.4 12h3.4M18.2 12h3.4M5.2 5.2l2.4 2.4M16.4 16.4l2.4 2.4M5.2 18.8l2.4-2.4M16.4 7.6l2.4-2.4"/></svg>',
+ info:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11.2v5M12 7.8h.01"/></svg>',
+ phone:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21.4 16.9v2.8a1.9 1.9 0 0 1-2.1 1.9 18.6 18.6 0 0 1-8.1-2.9 18.3 18.3 0 0 1-5.6-5.6A18.6 18.6 0 0 1 2.7 5a1.9 1.9 0 0 1 1.9-2.1h2.8a1.9 1.9 0 0 1 1.9 1.6c.1 1 .3 1.9.7 2.8a1.9 1.9 0 0 1-.4 2L8.4 10.5a15 15 0 0 0 5.6 5.6l1.2-1.2a1.9 1.9 0 0 1 2-.4c.9.4 1.8.6 2.8.7a1.9 1.9 0 0 1 1.6 1.9z"/></svg>',
+ clock:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 6.8V12l3.4 2"/></svg>',
+ close:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#16212B" stroke-width="2.1" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ micS:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4.4 13.6v-1.8a7.6 7.6 0 0 1 15.2 0v1.8"/><path d="M4.4 12.8a2.3 2.3 0 0 1 4.6 0v1.6a2.3 2.3 0 0 1-4.6 0z"/><path d="M18.4 16c.9-.8 1.5-1.9 1.5-3.1M21.3 18c1.3-1.2 2.1-2.9 2.1-4.7"/></svg>',
+ back:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#16212B" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M14.6 5.4 8 12l6.6 6.6"/></svg>',
+ chev:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 5.5 16 12l-6.5 6.5"/></svg>',
+ home:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.4 12 3.6l8.5 6.8v9a1.4 1.4 0 0 1-1.4 1.4H4.9a1.4 1.4 0 0 1-1.4-1.4z"/><path d="M9.4 20.8v-7.4h5.2v7.4"/></svg>',
+ note:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 2.8H6.4A1.6 1.6 0 0 0 4.8 4.4v15.2a1.6 1.6 0 0 0 1.6 1.6h11.2a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.6 2.8v5.4h5.6M8.4 13.2h7.2M8.4 17h4.8"/></svg>',
+ chart:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20.2V13M9.3 20.2V5.4M14.7 20.2v-9.6M20 20.2V8.6"/></svg>',
+ plus:'<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M12 5.4v13.2M5.4 12h13.2"/></svg>',
+ exp:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B4754" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3.6H3.6V9M15 3.6h5.4V9M9 20.4H3.6V15M15 20.4h5.4V15"/></svg>',
+ doc2:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13.6 2.8H6.8A1.6 1.6 0 0 0 5.2 4.4v15.2a1.6 1.6 0 0 0 1.6 1.6h10.4a1.6 1.6 0 0 0 1.6-1.6V8.2z"/><path d="M13.6 2.8v5.4h5.2M8.6 13.4h6.8M8.6 17h4.6"/></svg>',
+ up:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19.4V5M5.6 11.4 12 5l6.4 6.4"/></svg>',
+ down:'<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4.6V19M5.6 12.6 12 19l6.4-6.4"/></svg>',
+ cdn:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5.6 9.2 12 15.6l6.4-6.4"/></svg>',
+ cL:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16212B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.6 5.4 8 12l6.6 6.6"/></svg>',
+ cR:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#AEB7C0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.4 5.4 16 12l-6.6 6.6"/></svg>',
+ cR2:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9.4 5.4 16 12l-6.6 6.6"/></svg>',
+ homeG:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4A5763" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10.4 12 3.6l8.5 6.8v9a1.4 1.4 0 0 1-1.4 1.4H4.9a1.4 1.4 0 0 1-1.4-1.4z"/><path d="M9.4 20.8v-7.4h5.2v7.4"/></svg>',
+ bookA:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E5A85" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4.8" y="3.4" width="14.4" height="17.2" rx="2.2"/><path d="M8.9 3.4v17.2"/></svg>',
+ sun2:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B4621A" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.6v2.2M12 19.2v2.2M4.3 4.3l1.6 1.6M18.1 18.1l1.6 1.6M2.6 12h2.2M19.2 12h2.2M4.3 19.7l1.6-1.6M18.1 5.9l1.6-1.6"/></svg>',
+ sig:'<svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7.4" width="3" height="3.6" rx="1"/><rect x="4.6" y="5.2" width="3" height="5.8" rx="1"/><rect x="9.2" y="2.8" width="3" height="8.2" rx="1"/><rect x="13.8" y="0" width="3" height="11" rx="1"/></svg>',
+ wifi:'<svg width="16" height="11" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M1 4.1a10.4 10.4 0 0 1 14 0M3.6 6.9a6.6 6.6 0 0 1 8.8 0"/><path d="M8 10.2h.01" stroke-width="2.2"/></svg>',
+ bat:'<svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".6" y=".6" width="21" height="10.8" rx="3" stroke="currentColor" stroke-opacity=".35"/><rect x="2.4" y="2.4" width="17.4" height="7.2" rx="1.6" fill="currentColor"/><path d="M23.2 4.3v3.4a2 2 0 0 0 0-3.4z" fill="currentColor" fill-opacity=".4"/></svg>'
+};
+
+var CAT={move:{bg:'#E4EEF8',dot:'#1E5A85',circ:'#E1EEFC',ic:'walk'},
+         eye:{bg:'#EDE7F7',dot:'#5B3C9E',circ:'#EDE7F7',ic:'eye'},
+         tin:{bg:'#FBE9E4',dot:'#A3361B',circ:'#FBE9E4',ic:'waves'}};
+
+var WEEK=[{n:2,wd:'Пн',dots:['move']},{n:3,wd:'Вт',dots:['tin','eye']},{n:4,wd:'Ср',dots:[]},
+          {n:5,wd:'Чт',dots:['move','move'],now:1},{n:6,wd:'Пт',fut:1},{n:7,wd:'Сб',fut:1},{n:8,wd:'Вс',fut:1}];
+var MOODS=[['bad','Плохо'],['ok','Нормально'],['good','Отлично']];
+var CHIPS=[['move','Слабость в руке'],['eye','Размытое зрение'],['tin','Покалывание']];
+var TODAY=[['move','Слабость в ноге','9:01–11:30 · сильно, потом легче'],
+           ['move','Усталость','14:10–15:00 · умеренно']];
+
+function screenHTML(){
+  var w=WEEK.map(function(d){
+    var dots=(d.dots||[]).map(function(c){return '<i style="background:'+CAT[c].dot+'"></i>';}).join('');
+    return '<div class="d'+(d.now?' now':'')+(d.fut?' fut':'')+'"><span class="wd">'+d.wd+'</span>'+
+           '<span class="cell"><span class="n">'+d.n+'</span><span class="dots">'+dots+'</span></span></div>';
+  }).join('');
+  var m=MOODS.map(function(x){
+    return '<div class="m"><span class="ico">'+SVG[x[0]]+'</span><span class="lb">'+x[1]+'</span></div>';
+  }).join('');
+  var c=CHIPS.map(function(x){
+    return '<div class="c" style="background:'+CAT[x[0]].bg+'">'+SVG[CAT[x[0]].ic]+'<span>'+x[1]+'</span></div>';
+  }).join('');
+  var t=TODAY.map(function(x){
+    return '<li><span class="circ" style="background:'+CAT[x[0]].circ+'">'+SVG.pulse+'</span>'+
+           '<span class="tx"><span class="t">'+x[1]+'</span><span class="s">'+x[2]+'</span></span>'+SVG.chev+'</li>';
+  }).join('');
+  return '<div class="app">'+
+   '<div class="app-stb"><span>12:48</span><span class="ic">'+SVG.sig+SVG.wifi+SVG.bat+'</span></div>'+
+   '<div class="app-scroll"><div class="app-col">'+
+     '<div class="app-top"><h2>Ноябрь</h2><span class="app-gear">'+SVG.gear+'</span></div>'+
+     '<div class="app-main">'+
+       '<div class="app-week" data-zone="week">'+w+'</div>'+
+       '<section class="app-mood" data-zone="mood">'+
+         '<span class="pic"><span class="glow"></span><i class="l"></i><i class="r"></i></span>'+
+         '<h1>Привет, Саша,<br>как себя чувствуешь?</h1>'+
+         '<div class="row">'+m+'</div></section>'+
+       '<section class="app-card app-pick" data-zone="pick">'+
+         '<div class="hd"><h2>Выбрать симптом</h2></div><div class="chips">'+c+'</div></section>'+
+       '<section class="app-card app-today" data-zone="today">'+
+         '<div class="hd"><h2>Было сегодня</h2><span class="more">Вся история ›</span></div><ul>'+t+'</ul></section>'+
+     '</div></div></div>'+
+   '<div class="app-fade"></div>'+
+   '<nav class="app-tabs">'+
+     '<span class="tb on">'+SVG.home+'<span>Главная</span></span>'+
+     '<span class="tb" data-zone="record"><span class="slot"></span><span>Запись</span></span>'+
+     '<span class="tb">'+SVG.book+'<span>Аналитика</span></span>'+
+     '<span class="fab">'+SVG.plus+'</span></nav></div>';
+}
+
+var QCARDS=[['walk','#E1EEFC','Слабость<br>в ноге'],['eye','#EDE7F7','Двоение<br>в глазах'],
+            ['waves','#FBE9E4','Онемение<br>руки'],['waves','#FBE9E4','Жжение<br>в стопе'],
+            ['ear','#E8EAEE','Звон в ушах']];
+
+function quickHTML(){
+  var c=QCARDS.map(function(x){
+    return '<div class="q-c"><span class="ic" style="background:'+x[1]+'">'+SVG[x[0]]+'</span>'+
+           '<span class="lb">'+x[2]+'</span></div>';
+  }).join('');
+  return '<div class="app2">'+
+    '<div class="app-stb"><span>12:48</span><span class="ic">'+SVG.sig+SVG.wifi+SVG.bat+'</span></div>'+
+    '<div class="q-back">'+SVG.back+'<span>Обычный экран</span></div>'+
+    '<h1 class="q-h1">Что происходит?</h1>'+
+    '<div class="q-grid" data-zone="symptoms">'+c+'</div>'+
+    '<div class="q-other" data-zone="other">'+
+      '<div class="q-add">'+SVG.pencil+'<span>Добавить симптом</span></div>'+
+      '<div class="q-sp"></div>'+
+      '<div class="q-voice">'+SVG.mic+'<span>Рассказать голосом</span></div>'+
+    '</div></div>';
+}
+
+var STB='<div class="app-stb"><span>12:48</span><span class="ic">'+SVG.sig+SVG.wifi+SVG.bat+'</span></div>';
+
+/* Экран 1 · «Слушаю» */
+function voiceHTML(){
+  var bars=[22,36,15,46,28,40,19,33,24].map(function(h){
+    return '<i style="height:'+h+'px"></i>';}).join('');
+  return '<div class="app3">'+STB+
+   '<div class="v-hd"><h1 class="v-h1">Слушаю</h1>'+
+     '<span class="v-rec"><i></i>Запись · 0:14</span></div>'+
+   '<p class="v-sub">Расскажите как удобно: что чувствуете, когда началось, что мешает</p>'+
+   '<div class="v-card"><p>Нога опять слабая, с утра, примерно час. Хожу, но гораздо медленнее. На улице жарко<em>…</em></p></div>'+
+   '<div class="v-wave">'+bars+'</div>'+
+   '<div class="v-btns"><span class="v-btn ghost">Отмена</span>'+
+     '<span class="v-btn solid">Готово</span></div></div>';
+}
+
+/* Экран 2 · «Всё записал» */
+var VFIELDS=[['Симптом','Слабость в ноге'],['Когда началось','Сегодня утром, около 1 часа'],
+             ['Что могло повлиять','Жара']];
+function reviewHTML(){
+  var f=VFIELDS.map(function(x){
+    return '<div class="r"><div class="lb">'+x[0]+'</div><div class="vl">'+x[1]+'</div></div>';}).join('');
+  return '<div class="app3">'+STB+
+   '<h1 class="v-h1" style="margin-top:4px">Всё записал</h1>'+
+   '<div class="v-quote"><span class="qm">“</span>'+
+     '<div><b>Что вы сказали:</b><p>Нога опять слабая, с утра, примерно час. Хожу, но гораздо медленнее. На улице жарко.</p></div></div>'+
+   '<div class="v-fields" data-zone="parsed">'+f+'</div>'+
+   '<div class="v-foot"><div class="v-btns" style="margin-top:0">'+
+     '<span class="v-btn ghost" style="flex:0 0 44%">'+SVG.micS+'Повторить</span>'+
+     '<span class="v-btn solid">Всё верно</span></div></div></div>';
+}
+
+/* Экран 3 · блокировка с Live Activity */
+function lockHTML(){
+  return '<div class="app4">'+STB+
+   '<div class="lk-d">Среда, 4 ноября</div>'+
+   '<div class="lk-t">12:48</div>'+
+   '<div class="lk-live"><div><div class="lb">Активная запись</div>'+
+     '<div class="nm">Слабость в ноге</div></div>'+
+     '<span class="pill">'+SVG.clock+'42 мин</span></div></div>';
+}
+
+/* Экран 4 · шторка «симптом ещё активен?» */
+function sheetHTML(){
+  return '<div class="app5">'+
+   '<div class="dimmed">'+screenHTML()+'</div><div class="scrim"></div><div class="glowdot"></div>'+
+   '<div class="sh"><span class="x">'+SVG.close+'</span>'+
+     '<span class="pic"><span class="glow"></span><i class="l"></i><i class="r"></i></span>'+
+     '<h2>Подскажи, симптом ещё активен?</h2>'+
+     '<div class="sh-card">'+
+       '<span class="sh-since">'+SVG.clock+'Идёт с 9:01 · 42 мин</span>'+
+       '<div class="nm">Слабость в ноге</div>'+
+       '<div class="r"><span class="lb">Степень боли</span><span class="vl">Сильно</span></div>'+
+       '<div class="r"><span class="lb">Что могло повлиять</span><span class="vl">Жара</span></div>'+
+       '<div class="sh-btns"><span class="a">Изменить</span><span class="b">Завершить</span></div>'+
+     '</div></div></div>';
+}
+
+/* Экран 5 · главная при следующем заходе · напоминание о записи */
+function remindHTML(){
+  var c=CHIPS.map(function(x){
+    return '<div class="c" style="background:'+CAT[x[0]].bg+'">'+SVG[CAT[x[0]].ic]+'<span>'+x[1]+'</span></div>';
+  }).join('');
+  return '<div class="app6">'+STB+
+   '<div class="rm-col">'+
+     '<div class="rm-top"><span class="app-gear">'+SVG.gear+'</span></div>'+
+     '<span class="rm-pic"><span class="glow"></span><i class="l"></i><i class="r"></i></span>'+
+     '<h1 class="rm-h1">Дополним информацию по сохранённым симптомам?</h1>'+
+     '<div class="rm-card" data-zone="kept">'+
+       '<span class="rm-since">'+SVG.clock+'Записано сегодня в 09:15</span>'+
+       '<div class="nm">Слабость в ноге</div>'+
+       '<div class="rm-btns"><span class="a">Закрыть</span><span class="b">Дополнить</span></div>'+
+     '</div>'+
+     '<section class="app-card app-pick" style="margin-top:16px">'+
+       '<div class="hd"><h2>Выбрать симптом</h2></div><div class="chips">'+c+'</div></section>'+
+   '</div>'+
+   '<div class="app-fade"></div>'+
+   '<nav class="app-tabs">'+
+     '<span class="tb on">'+SVG.home+'<span>Главная</span></span>'+
+     '<span class="tb"><span class="slot"></span><span>Запись</span></span>'+
+     '<span class="tb">'+SVG.book+'<span>Аналитика</span></span>'+
+     '<span class="fab">'+SVG.plus+'</span></nav></div>';
+}
+
+/* Экран 3.1 · подробная запись — содержимое каталога из макета */
+var PAL={blue:['#E4EEF8','walk'],viol:['#EDE7F7','eye'],red:['#FBE9E4','waves'],
+         teal:['#E3EFEC','ear'],ind:['#E9E8F2','head'],yell:['#FBF0C8','batt'],grey:['#E8EAEE','ear']};
+var MINE=[['blue','Слабость в ноге'],['viol','Двоение в глазах'],['red','Онемение руки'],['yell','Усталость']];
+var CATS=[
+ ['Движение и сила','blue',['Слабость в руке','Скованность мышц','Спазмы','Дрожь в руках','Неловкость в руках','Трудно ходить']],
+ ['Чувствительность и боль','red',['Покалывание','Жжение','«Удар током» при наклоне головы','Стягивание в груди','Боль в ноге','Головная боль']],
+ ['Зрение','viol',['Размытое зрение','Боль при движении глаз','Цвета стали тусклыми','Пятно перед глазами']],
+ ['Равновесие и речь','teal',['Головокружение','Шатает при ходьбе','Нечёткая речь','Трудно глотать']],
+ ['Мышление и настроение','ind',['Трудно сосредоточиться','Проблемы с памятью','Тревога','Подавленность','Перепады настроения']],
+ ['Энергия и сон','yell',['Нет сил с утра','Сонливость днём','Бессонница']],
+ ['Мочевой пузырь и кишечник','grey',['Частые позывы','Трудно сдержать','Запор']]
+];
+var TRIG=['Жара','Еда','Менструальный цикл','Плохой сон','Стресс','Простуда, инфекция'];
+
+function dsPill(key,label){
+  var c=PAL[key];
+  return '<span class="ds-p" style="background:'+c[0]+'">'+SVG[c[1]]+'<span>'+label+'</span></span>';
+}
+function detailHTML(){
+  var mine=MINE.map(function(x){return dsPill(x[0],x[1]);}).join('')+
+    '<span class="ds-p dash">'+SVG.pencil+'<span>Создать свой симптом</span></span>';
+  var cats=CATS.map(function(c){
+    return '<div class="ds-sec"><h3>'+c[0]+'</h3><div class="ds-pills">'+
+      c[2].map(function(l){return dsPill(c[1],l);}).join('')+'</div></div>';
+  }).join('');
+  var trig=TRIG.map(function(l){
+    return '<span class="ds-p" style="background:#EFF1F4"><span>'+l+'</span></span>';}).join('')+
+    '<span class="ds-p dash">'+SVG.pencil+'<span>Свой вариант</span></span>';
+  return '<div class="app7">'+
+   '<div class="dimmed">'+screenHTML()+'</div><div class="scrim"></div>'+
+   '<div class="ds">'+
+     '<div class="ds-top"><span class="x">'+SVG.close+'</span><span class="ti">Новая запись</span></div>'+
+     '<div class="ds-scroll"><div class="ds-col">'+
+       '<div class="ds-sec" data-zone="mine"><h2>Мои симптомы</h2>'+
+         '<div class="ds-pills">'+mine+'</div></div>'+
+       '<div class="ds-sec" data-zone="find"><h2>Каталог симптомов</h2>'+
+         '<div class="ds-find"><span class="ds-inp">'+SVG.search+'Найти симптом</span>'+
+         '<span class="ds-micb">'+SVG.micBtn+'</span></div></div>'+
+       '<div class="ds-sec" data-zone="cats" style="gap:30px">'+cats+'</div>'+
+       '<div class="ds-sec"><h2>Что могло повлиять</h2>'+
+         '<p class="hint">Необязательно. Поможет найти, что связано с симптомами</p>'+
+         '<div class="ds-pills">'+trig+'</div></div>'+
+       '<div class="ds-sec"><h3>Заметка</h3>'+
+         '<div class="ds-note">Что ещё важно: еда, нагрузка, лекарства…</div>'+
+         '<p class="ds-cap">Микрофон добавляет сказанное в заметку как текст</p></div>'+
+     '</div></div>'+
+   '</div></div>';
+}
+
+/* Окно конкретизации симптома (1.2 Выраженность) */
+var HOW=['Слабо','Умеренно','Сильно'];
+var WHEN=['Сейчас','Сегодня','Вчера'];
+var WHY=[['sun','Жара'],['food','Еда'],['drop','Менструальный цикл'],
+         ['moon','Плохой сон'],['zig','Стресс'],['virus','Простуда, инфекция'],
+         ['pencil','Свой вариант']];
+
+function exHTML(){
+  var how=HOW.map(function(l){return '<span class="ex-p">'+l+'</span>';}).join('');
+  var when=WHEN.map(function(l){return '<span class="ex-p">'+l+'</span>';}).join('');
+  var why=WHY.map(function(x){return '<span class="ex-p">'+SVG[x[0]]+l2(x[1])+'</span>';}).join('');
+  function l2(t){return '<span>'+t+'</span>'}
+  return '<div class="app8">'+
+   '<div class="dimmed">'+screenHTML()+'</div><div class="scrim"></div>'+
+   '<div class="ex">'+
+     '<div class="ex-head"><span class="ex-grab"></span><span class="ex-x">'+SVG.close+'</span></div>'+
+     '<div class="ex-scroll"><div class="ex-col">'+
+       '<div data-zone="rec"><h2 class="ex-h1">Слабость в ноге</h2>'+
+         '<p class="ex-sub">Симптом уже записан. Дальше — по желанию, можно сразу нажать «Готово»</p></div>'+
+       '<div class="ex-sec" data-zone="how"><h3>Как сильно <em>(необязательно)</em></h3>'+
+         '<div class="ex-row">'+how+'</div></div>'+
+       '<div class="ex-sec" data-zone="when"><h3>Когда началось <em>(необязательно)</em></h3>'+
+         '<div class="ex-row">'+when+'</div></div>'+
+       '<div data-zone="why" style="display:flex;flex-direction:column;gap:30px">'+
+         '<div class="ex-sec"><h3>Что могло повлиять <em>(необязательно)</em></h3>'+
+           '<div class="ex-row">'+why+'</div></div>'+
+         '<div class="ex-sec"><h3 style="font-size:18px">Заметка</h3>'+
+           '<div class="ex-note">Что ещё важно: еда, нагрузка, лекарства…</div>'+
+           '<p class="ex-cap">Микрофон добавляет сказанное в заметку как текст</p></div>'+
+       '</div>'+
+     '</div></div>'+
+     '<div class="ex-foot"><span>Готово</span></div>'+
+   '</div></div>';
+}
+
+/* Экран 6 · аналитика за период */
+var ANC={y:'#E0A526',b:'#1E5A85',v:'#8C6FD6',r:'#C4532D'};
+var ANDAYS=['y34 b44','','','','v30 y62','','','r46','','','y40 b50','','y36','','b46','','','','',
+            'v62 y38 r46','','','','b42 y34','','b52 v42 r46','','','b56 y72','y80 v44 b58 r50','y66 b50 r44'];
+var ANSHORT=[['Чаще всего<br>отмечали','Усталость','8 раз за период'],
+             ['Сильно и очень<br>сильно','1 запись','6 окт, усталость'],
+             ['Дольше всего','2 ч','усталость, 6 окт'],
+             ['Дольше 24 часов','Не было','ни одной записи']];
+var ANDAYST=[['Дней с записями','15 из 31','в октябре'],['Больше всего','30 окт','по 4 записи'],
+             ['Без записей','16 дней','за период'],['Самый долгий<br>перерыв','3 дня','23–25 окт']];
+var ANHOW=[['Слабо',100,10],['Умеренно',100,10],['Сильно',10,1],['Очень сильно',0,0],['Не указано',10,1,'gr']];
+var ANSYM=[['batt','#FBEFC8','Усталость','8 раз · всего 10 ч 40 мин','up','На 4 раза больше, чем в прошлом месяце'],
+           ['walk','#E1EEFC','Слабость в ноге','6 раз · всего 4 ч 15 мин','up','На 2 раза больше, чем в прошлом месяце'],
+           ['eye','#EDE7F7','Двоение в глазах','4 раза · всего 1 ч 35 мин','down','На 1 раз меньше, чем в прошлом месяце'],
+           ['waves','#FBE9E4','Онемение руки','4 раза · всего 2 ч 30 мин','up','На 4 раза больше, чем в прошлом месяце']];
+
+function anaHTML(){
+  var chart=ANDAYS.map(function(d){
+    if(!d) return '<span class="dy"><u></u></span>';
+    return '<span class="dy">'+d.split(' ').map(function(s){
+      return '<i style="height:'+s.slice(1)+'px;background:'+ANC[s[0]]+'"></i>';}).join('')+'</span>';
+  }).join('');
+  var short=ANSHORT.map(function(x){
+    return '<div class="an-st"><span class="lb">'+x[0]+'</span><span class="vl">'+x[1]+'</span>'+
+           '<span class="sb">'+x[2]+'</span></div>';}).join('');
+  var plates=ANDAYST.map(function(x){
+    return '<div class="an-st grey"><span class="lb">'+x[0]+'</span><span class="vl">'+x[1]+'</span>'+
+           '<span class="sb">'+x[2]+'</span></div>';}).join('');
+  var leg=[['y','Усталость',8],['b','Слабость в ноге',6],['v','Двоение в глазах',4]].map(function(x){
+    return '<div class="r"><i style="background:'+ANC[x[0]]+'"></i><span>'+x[1]+'</span><b>'+x[2]+'</b></div>';
+  }).join('')+'<div class="r mut"><i class="dash"></i><span>Нет записей</span></div>';
+  var how=ANHOW.map(function(x){
+    return '<div class="r"><span class="lb">'+x[0]+'</span><span class="tr"><i class="'+(x[3]||'')+
+      '" style="width:'+x[1]+'%"></i></span><span class="vl">'+x[2]+'</span></div>';}).join('');
+  var sym=ANSYM.map(function(x){
+    return '<div class="it"><div class="hd2"><span class="ic" style="background:'+x[1]+'">'+SVG[x[0]]+'</span>'+
+      '<span class="tx"><span class="t">'+x[2]+'</span><span class="s">'+x[3]+'</span></span>'+SVG.chev+'</div>'+
+      '<div class="dl">'+SVG[x[4]]+'<span>'+x[5]+'</span></div></div>';}).join('');
+  var cells='';
+  for(var i=0;i<8;i++) cells+='<i class="'+(i<6?'':'off')+'"></i>';
+  return '<div class="app10">'+STB+
+   '<div class="an-fix">'+
+     '<div class="an-head" data-zone="period">'+
+       '<span class="an-mes">Мес'+SVG.cdn+'</span>'+
+       '<span class="an-per">'+SVG.cL+'<b>Октябрь</b>'+SVG.cR+'</span></div>'+
+     '<div class="an-seg" data-zone="mode"><span class="on">Обзор</span><span>Хронология</span></div>'+
+   '</div>'+
+   '<div class="an-scroll"><div class="an-col">'+
+     '<div class="an-g2" data-zone="short">'+short+'</div>'+
+     '<div class="an-card">'+
+       '<div data-zone="chart">'+
+         '<div class="an-hd"><div><h2>Записи по дням</h2><p class="cap">За этот месяц</p></div>'+
+           '<span class="an-exp">'+SVG.exp+'</span></div>'+
+         '<div class="an-chart">'+chart+'</div>'+
+         '<div class="an-ax"><span>1</span><span>8</span><span>15</span><span>22</span><span>31</span></div>'+
+         '<div class="an-leg">'+leg+'</div>'+
+         '<div class="an-all">Показать все (1)'+SVG.cdn+'</div></div>'+
+       '<div data-zone="days" style="margin-top:14px"><div class="an-g2">'+plates+'</div>'+
+         '<div class="an-btn">Смотреть историю'+SVG.cR2+'</div></div>'+
+     '</div>'+
+     '<div class="an-card" data-zone="how"><h2>Как сильно</h2><p class="cap">За этот месяц</p>'+
+       '<div class="an-bars">'+how+'</div></div>'+
+     '<div class="an-card" data-zone="sym"><h2>По симптомам</h2><p class="cap">За этот месяц</p>'+
+       '<div class="an-sym">'+sym+'</div></div>'+
+     '<div class="an-card" data-zone="together"><h2>Часто отмечалось вместе</h2>'+
+       '<div class="an-pair"><span class="duo"><span class="a">'+SVG.batt+'</span>'+
+         '<span class="b">'+SVG.sun2+'</span></span>'+
+         '<span><span class="t">Усталость и жара</span><br>'+
+         '<span class="s">Вместе в 6 из 8 записей с усталостью</span></span></div>'+
+       '<div class="an-cells">'+cells+'</div>'+
+       '<div class="an-cl"><span><i></i>6 — с жарой</span><span><i class="off"></i>2 — без жары</span></div>'+
+       '<div class="an-note">'+SVG.info+'<span>Это совпадение в ваших записях, а не установленная причина.</span></div>'+
+       '<div class="an-btn">Открыть 8 записей</div></div>'+
+     '<div class="an-card" data-zone="prep"><h2>Подготовка к приёму</h2>'+
+       '<p class="an-p">Соберите сводку за этот период. Вы сами выберете, что в неё войдёт, и посмотрите её до экспорта.</p>'+
+       '<div class="an-btn">'+SVG.doc2+'Подготовить сводку</div></div>'+
+   '</div></div>'+
+   '<div class="app-fade"></div>'+
+   '<nav class="app-tabs">'+
+     '<span class="tb">'+SVG.homeG+'<span>Главная</span></span>'+
+     '<span class="tb"><span class="slot"></span><span>Запись</span></span>'+
+     '<span class="tb on">'+SVG.bookA+'<span>Аналитика</span></span>'+
+     '<span class="fab">'+SVG.plus+'</span></nav></div>';
+}
+
+/* Рекомендация при тревожном симптоме */
+function sosHTML(){
+  return '<div class="app9">'+
+   '<div class="dimmed">'+screenHTML()+'</div><div class="scrim"></div>'+
+   '<div class="sos">'+
+     '<span class="sos-x">'+SVG.close+'</span>'+
+     '<span class="sos-chip">'+SVG.info+'Рекомендация</span>'+
+     '<h2 class="sos-h1">Позвоните 103 или 112</h2>'+
+     '<p class="sos-p">Вы отметили: <b>нечёткая речь.</b> Если ранее симптома не было, '+
+       'рекомендуем вызвать скорую или обратиться к врачу. Такое может быть связано не только с РС.</p>'+
+     '<span class="sos-sp"></span>'+
+     '<span class="sos-btn">'+SVG.phone+'Позвонить 103</span>'+
+   '</div></div>';
+}
+
+function scrollSheet(cv){
+  var col=cv.querySelector('.ds-col,.ex-col,.an-col'); if(!col) return;
+  var key=cv.getAttribute('data-scrollto'); if(!key){col.style.marginTop='';return}
+  var z=col.querySelector('[data-zone="'+key+'"]'); if(!z) return;
+  var view=cv.querySelector('.ds-scroll,.ex-scroll,.an-scroll');
+  var viewH=view?view.clientHeight:600;
+  var rel=z.offsetTop-col.offsetTop;
+  var off=cv.getAttribute('data-align')==='top'
+    ? rel-20
+    : rel-Math.max(0,(viewH-z.offsetHeight)/2);
+  col.style.marginTop=(-Math.max(0,Math.round(off)))+'px';
+}
+
+function buildScreens(){
+  var MAKE={quick:quickHTML,voice:voiceHTML,review:reviewHTML,lock:lockHTML,sheet:sheetHTML,
+           detail:detailHTML,ex:exHTML,sos:sosHTML,remind:remindHTML,ana:anaHTML,app:screenHTML};
+  [].forEach.call(document.querySelectorAll('.canvas[data-screen]'),function(cv){
+    if(cv.getAttribute('data-built'))return;
+    cv.innerHTML=(MAKE[cv.getAttribute('data-screen')]||screenHTML)();
+    var off=parseFloat(cv.getAttribute('data-off'))||0;
+    var col=cv.querySelector('.app-col');
+    if(off&&col) col.style.marginTop=(62-off)+'px';
+    scrollSheet(cv);
+    cv.setAttribute('data-built','1');
+  });
+}
+
+function rescrollSheets(){
+  [].forEach.call(document.querySelectorAll('.canvas[data-scrollto]'),scrollSheet);
+}
+
+function placeNav(){
+  var nav=document.querySelector('.nav'); if(!nav) return;
+  if(!window.matchMedia('(min-width:700px)').matches){nav.style.left='';nav.style.right='';return}
+  // позиция одна для всех слайдов: считаем по геометрии .rone (один телефон + карточка),
+  // а не по фактической карточке текущего слайда — иначе на широких раскладках навигация уезжает
+  var wrap=document.querySelector('main.wrap'); if(!wrap) return;
+  var r=wrap.getBoundingClientRect(), cs=getComputedStyle(wrap);
+  var padL=parseFloat(cs.paddingLeft)||0, padR=parseFloat(cs.paddingRight)||0;
+  var left=r.left+padL, avail=r.width-padL-padR;
+  var edge;
+  if(!window.matchMedia('(min-width:820px)').matches){
+    edge=left+avail;
+  }else{
+    var gap=Math.min(72,Math.max(28,innerWidth*0.04));
+    var total=Math.min(avail,272+520+gap);
+    edge=left+(avail-total)/2+total;
+  }
+  if(!edge) return;
+  var w=nav.offsetWidth||172;
+  var left=Math.min(Math.round(edge+24),Math.round(innerWidth-w-16));
+  nav.style.left=Math.max(16,left)+'px';
+  nav.style.right='auto';
+}
+
+function fitHighlights(){
+  var sl=document.querySelector('.slide.on'); if(!sl) return;
+  [].forEach.call(sl.querySelectorAll('.hl[data-zone]'),function(hl){
+    var ph=hl.parentElement; if(!ph||!ph.classList.contains('ph'))return;
+    var cv=ph.querySelector('.canvas'); if(!cv)return;
+    var target=cv.querySelector('[data-zone="'+hl.getAttribute('data-zone')+'"]');
+    if(!target){hl.style.display='none';return;}
+    hl.style.display='';
+    var tb=target.getBoundingClientRect(), pb=ph.getBoundingClientRect();
+    if(!pb.height)return;
+    var pad=ph.offsetWidth*0.022;
+    hl.style.top=Math.round(tb.top-pb.top-pad)+'px';
+    hl.style.height=Math.round(tb.height+pad*2)+'px';
+    if(hl.getAttribute('data-fit')==='box'){
+      var L=Math.round(tb.left-pb.left-pad);
+      hl.style.left=L+'px';
+      hl.style.right='auto';
+      hl.style.width=Math.round(tb.width+pad*2)+'px';
+      // стрелку выносим за правый край телефона, иначе она ложится на соседние элементы
+      var arw=hl.querySelector('.arw');
+      if(arw) arw.style.left=Math.round(pb.width-L+6)+'px';
+    }
+  });
+}
+
+function fitScreens(){
+  [].forEach.call(document.querySelectorAll('.ph .scr'),function(scr){
+    var cv=scr.firstElementChild; if(!cv) return;
+    var w=scr.clientWidth; if(!w) return;
+    var lw=parseFloat(cv.getAttribute('data-w'))||(cv.classList.contains('w440')?440:393);
+    cv.style.transform='scale('+(w/lw)+')';
+  });
+}
+
+function render(){
+  slides.forEach(function(s,n){s.classList.toggle('on',n===i)});
+  cnt.textContent=(i+1)+' / '+slides.length;
+  prev.disabled=i===0;next.disabled=i===slides.length-1;
+  window.scrollTo({top:0,behavior:'instant'});
+  requestAnimationFrame(function(){setBar();fitPhones();fitScreens();matchCard();rescrollSheets();fitHighlights();placeNav();});
+}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));render()}
+prev.addEventListener('click',function(){go(i-1)});
+next.addEventListener('click',function(){go(i+1)});
+addEventListener('keydown',function(e){
+  if(e.metaKey||e.ctrlKey||e.altKey)return;
+  if(e.target&&e.target.closest&&e.target.closest('input,select,textarea'))return;
+  var k=e.key;
+  if(k==='ArrowRight'||k==='PageDown'||k===' '||k==='Spacebar'){e.preventDefault();go(i+1);return}
+  if(k==='ArrowLeft'||k==='PageUp'){e.preventDefault();go(i-1);return}
+  if(k==='Home'){e.preventDefault();go(0);return}
+  if(k==='End'){e.preventDefault();go(slides.length-1)}
+});
+addEventListener('resize',function(){setBar();fitPhones();fitScreens();matchCard();rescrollSheets();fitHighlights();placeNav();});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fitPhones();fitScreens();matchCard();rescrollSheets();fitHighlights();placeNav();});
+buildScreens();setBar();render();
+setTimeout(function(){setBar();fitPhones();fitScreens();matchCard();rescrollSheets();fitHighlights();placeNav();},250);
+})();
+</script>
+</body>
+</html>
